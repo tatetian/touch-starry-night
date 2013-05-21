@@ -14,5 +14,12 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>core</artifactId>
+      <version>1.5.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/core.jar</systemPath>
+    </dependency>
   </dependencies>
 </project>
