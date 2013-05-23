@@ -21,5 +21,47 @@
       <scope>system</scope>
       <systemPath>${project.basedir}/lib/core.jar</systemPath>
     </dependency>
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>jogl</artifactId>
+      <version>1.5.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/jogl-all.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>gluegen-rt</artifactId>
+      <version>1.5.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/gluegen-rt.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>jogl-all-natives-macosx-universal</artifactId>
+      <version>1.5.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/jogl-all-natives-macosx-universal.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>gluegen-rt-natives-macosx-universal</artifactId>
+      <version>1.5.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/gluegen-rt-natives-macosx-universal.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>batikfont</artifactId>
+      <version>1.5.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/batikfont.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>geomerative</artifactId>
+      <version>1.5.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/geomerative.jar</systemPath>
+    </dependency>
   </dependencies>
 </project>

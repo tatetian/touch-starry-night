@@ -30,7 +30,6 @@ public class App extends PApplet
 	  imgHills = loadImage(mainSceneDir + "hills.png");
 	  imgStars = loadImage(mainSceneDir + "stars.png");
  
-	  //frameRate(30);
 	  smooth();
 	  size(SCREEN_WIDTH, SCREEN_HEIGHT, P2D);
   }
