@@ -52,16 +52,12 @@ public class App extends PApplet
   }
   
   private void animateObject(int t, PImage img, float maxZoom) {
-  	
-  	//float animZoom = f(t, maxZoom);
-  	
-//  	float zoomDelta = animZoom - 1.0f;
-//  	int x = (int) (-CENTER_X * zoomDelta);
-//  	int y = (int) (-CENTER_Y * zoomDelta);
   	pushMatrix();
-  		float animZoom = f(t, maxZoom);
-  		scale(animZoom);
-  		image(img, -CENTER_X, -CENTER_Y);
+  		
+  	float animZoom = f(t, maxZoom);
+  	scale(animZoom);
+  	image(img, -CENTER_X, -CENTER_Y);
+  	
   	popMatrix();
   }
   
