@@ -1,5 +1,6 @@
 package me.tatetian.scene;
 
+import me.tatetian.effects.Star2TextAnimation;
 import me.tatetian.stars.Nebula;
 import me.tatetian.stars.SpriteStarsRenderer;
 import me.tatetian.stars.StarText;
@@ -26,6 +27,7 @@ public class M51NebulaScene extends NebulaScene {
 		starText = new StarText("small_stars/4.png", 
 														"Starry Night\nis Beautiful!", 200,
 														E.WINDOW_WIDTH / 2, E.WINDOW_HEIGHT / 2, -2000 );
+		starText.hide(0);
 		z_adjust  = 0.0f;
 		z_step 		= 0.25f;
 	}
@@ -46,7 +48,14 @@ public class M51NebulaScene extends NebulaScene {
 
 	@Override
 	public void click(int clientX, int clientY) {
+		background.hide(2000);
+		starText.delay(2000);
 		starText.show(4000);
+		// Moving star to form the shape of text
+		Star2TextAnimation sta = new Star2TextAnimation(
+																	starText, nebula.getStars(), 3000);
+		sta.delay(1000);
+		E.addAnimation(sta);
 	}
 	
 	public static class M51Nebula extends Nebula {
