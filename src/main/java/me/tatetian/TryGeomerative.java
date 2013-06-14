@@ -81,7 +81,7 @@ public class TryGeomerative extends PApplet {
 	  RG.init(this); //Initialise the library.
 	  
 	  // init text
-	  text = RG.getText("Hello world!", "../../data/FreeSans.ttf", 72, CENTER); 
+	  text = RG.getText("Hello world!", "../../data/new_spirit.ttf", 72, CENTER); 
 	  RG.setPolygonizer(RG.UNIFORMLENGTH);
 	  RG.setPolygonizerLength(20);
 	  text.translate(WIDTH/2, HEIGHT/2);

@@ -1,36 +1,39 @@
 package me.tatetian;
 
-import java.util.Map;
+import java.util.Iterator;
+import java.util.LinkedList;
 
+import me.tatetian.common.Drawable;
+import me.tatetian.effects.Animation;
 import me.tatetian.scene.MainScene;
-import me.tatetian.scene.NebulaScene;
 import me.tatetian.scene.NebulaScene;
 import me.tatetian.scene.Scene;
 
 import processing.core.PApplet;
 
 public class Engine extends PApplet {
-	public static final int WINDOW_WIDTH  = 1440;
-	public static final int WINDOW_HEIGHT = 810;
-	public static final int WINDOW_DEPTH  = 10 * WINDOW_HEIGHT;
-	public static final String BASE_PATH  = "../../data/";
+	public final int WINDOW_WIDTH  = 1440;
+	public final int WINDOW_HEIGHT = 810;
+	public final int WINDOW_DEPTH  = 10 * WINDOW_HEIGHT;
+	public final String BASE_PATH  = "../../data/";
+	public final int FRAME_RATE  	= 25;
 	
 	private Controller controller;
+	private LinkedList<Animation> animations;
 	
 	private Scene currentScene;
 	private MainScene mainScene;
 	
-	public static Engine INSTANCE;
-	
 	public void setup() {		
-		INSTANCE			= this;
+		Drawable.setEngine(this);
+		Animation.setEngine(this);
 		
 		// init processing
 		size(WINDOW_WIDTH, WINDOW_HEIGHT, P3D);
 		background(0);
 		smooth();
 		imageMode(CENTER);
-	  frameRate(24);
+	  frameRate(FRAME_RATE);
 	  
 	  float fov = PI/3;
 	  float cameraZ = (height/2) / tan(fov/2);
@@ -44,7 +47,10 @@ public class Engine extends PApplet {
 		// init variables
 		controller 		= new Controller(this);
 		mainScene 		= new MainScene();
-		currentScene	= NebulaScene.get(NebulaScene.Name.M51);
+		animations 		= new LinkedList<Animation>();
+
+		currentScene  = NebulaScene.get(NebulaScene.Name.M51) ;
+		//		currentScene 	= new TextScene();
 	}
 	
 	public void draw() {
@@ -52,7 +58,10 @@ public class Engine extends PApplet {
 		lights();
 		
 		blendMode(ADD);
+		hint(DISABLE_DEPTH_TEST);
 		currentScene.draw();
+		
+		doAnimations();
 	}
 	
 	public void mouseClicked() {
@@ -67,6 +76,26 @@ public class Engine extends PApplet {
 		return currentScene == mainScene ;
 	}
 	
+	public void switchScene(Scene scene) {
+		Scene fromScene = currentScene;
+		currentScene = scene;
+		currentScene.transit(fromScene);
+	}
+	
+	public void addAnimation(Animation a) {
+		animations.add(a);
+		a.start();
+	}
+	
+	public void doAnimations() {
+		Iterator<Animation> iter = animations.iterator() ;
+		while(iter.hasNext()) {
+			Animation a = iter.next();
+			a.step();
+			if(a.finished()) iter.remove();
+		}
+	}
+	
 	public static class Controller {
 		private Engine engine;
 		
@@ -77,6 +106,10 @@ public class Engine extends PApplet {
 		public void click(int mouseX, int mouseY) {
 			if( engine.isMainScene() ) {
 				
+			}
+			else {
+				NebulaScene nbs = (NebulaScene) engine.currentScene;
+				nbs.click(mouseX, mouseY);
 			}
 		}
 		

@@ -1,6 +1,7 @@
 package me.tatetian.stars;
 
 import me.tatetian.Engine;
+import me.tatetian.common.Drawable;
 import processing.core.PImage;
 import processing.opengl.PShader;
 
@@ -8,17 +9,17 @@ public class SpriteStarsRenderer implements StarsRenderable {
 	private PShader starShader;
 	private int starColor;
 	private float weight;
+	private Engine E;
 	
-	public SpriteStarsRenderer(String starImgPath, float weight) {
-		Engine e = Engine.INSTANCE;
-				
+	public SpriteStarsRenderer(Engine e, String starImgPath, float weight) {
+		this.E = e;
 	  this.weight = weight;
-	  this.starColor = e.color(255);
+	  this.starColor = E.color(255);
 		
-		this.starShader = e.loadShader(Engine.BASE_PATH + "spritefrag.glsl", 
-														   Engine.BASE_PATH + "spritevert.glsl");
+		this.starShader = E.loadShader(e.BASE_PATH + "spritefrag.glsl", 
+														   		 e.BASE_PATH + "spritevert.glsl");
 	  this.starShader.set("weight", weight);
-	  PImage star = e.loadImage(Engine.BASE_PATH + starImgPath);
+	  PImage star = E.loadImage(e.BASE_PATH + starImgPath);
 	  this.starShader.set("sprite", star);  
 	}
 	
@@ -27,13 +28,12 @@ public class SpriteStarsRenderer implements StarsRenderable {
 	}
 	
 	public void draw(Star[] stars) {		
-		Engine e = Engine.INSTANCE;
-		e.shader(starShader, e.POINTS);
-		e.strokeWeight(weight);
-	  e.strokeCap(e.SQUARE);
-	  e.stroke(starColor);
+		E.shader(starShader, E.POINTS);
+		E.strokeWeight(weight);
+	  E.strokeCap(E.SQUARE);
+	  E.stroke(starColor);
 	  for(Star star : stars)
-	  	e.point(star.x, star.y, star.z);
-	  e.resetShader();
+	  	E.point(star.x, star.y, star.z);
+	  E.resetShader();
 	}
 }

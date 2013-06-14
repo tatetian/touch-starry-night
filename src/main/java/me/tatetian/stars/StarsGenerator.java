@@ -13,8 +13,8 @@ public class StarsGenerator {
 																float w, float h, float xy_scale, 
 																float min_z, float max_z) {
 		Star[] stars = new Star[num];
-		float min_x = w * ( 1 - xy_scale ) / 2,
-					min_y = h * ( 1 - xy_scale ) / 2,
+		float min_x = - xy_scale * w,
+					min_y = - xy_scale * h,
 					max_x = xy_scale * w,
 					max_y = xy_scale * h;
 		for(int star_i = 0; star_i < num; star_i++) {
@@ -27,10 +27,10 @@ public class StarsGenerator {
 															 float min_y, float max_y, 
 															 float min_z, float max_z) {	
 		float rx, ry;
-		do {
+//		do {
 			rx = random.nextFloat();
 			ry = random.nextFloat();
-		} while( 0.38f < rx && rx < 0.62f && 0.38f < ry && ry < 0.62f);
+//		} while( 0.38f < rx && rx < 0.62f && 0.38f < ry && ry < 0.62f);
 		
 		float x = min_x + rx * (max_x - min_x),
 					y = min_y + ry * (max_y - min_y),

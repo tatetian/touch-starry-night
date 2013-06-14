@@ -1,8 +1,9 @@
 package me.tatetian.scene;
 
 import me.tatetian.Engine;
+import me.tatetian.common.Drawable;
 
-public abstract class Scene {
+public abstract class Scene extends Drawable {
 	public Scene() {
 		setup();
 	}
