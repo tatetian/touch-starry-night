@@ -39,11 +39,11 @@ public abstract class NebulaScene extends Scene {
 	}
 	
 	@Override
-	public void draw() {		
+	public void draw() {	
+		E.blendMode(E.ADD);
+		E.hint(E.DISABLE_DEPTH_TEST);
 		_draw();
 	}
 	
 	protected abstract void _draw(); 
-	
-	public abstract void click(int clientX, int clientY);
 }

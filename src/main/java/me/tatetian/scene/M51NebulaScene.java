@@ -11,7 +11,7 @@ import me.tatetian.stars.StarsGenerator;
 
 public class M51NebulaScene extends NebulaScene {
 	private Nebula nebula;
-	private Background background;
+	private NebulaSceneBackground background;
 	private StarText starText;
 	
 	private Star2TextAnimationMaker stars2TextAnimator;
@@ -21,7 +21,7 @@ public class M51NebulaScene extends NebulaScene {
 	@Override
 	protected void setup() {
 		// init background
-		background = new Background("max.png", - E.WINDOW_DEPTH / 10);
+		background = new NebulaSceneBackground("max.png", - E.WINDOW_DEPTH / 10);
 		//background.show(4000);
 		background.rotate(0.0004f, -1);
 		// init nubulas

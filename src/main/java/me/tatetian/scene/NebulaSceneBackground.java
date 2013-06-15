@@ -4,15 +4,15 @@ import processing.core.PImage;
 import me.tatetian.common.DrawableObject;
 import me.tatetian.effects.Showable;
 
-public class Background extends DrawableObject
+public class NebulaSceneBackground extends DrawableObject
 												implements Showable {
 	private PImage background;
 	private float normal_z;
 	
-	public Background(String imgPath, float z) {
+	public NebulaSceneBackground(String imgPath, float z) {
 		this(imgPath, E.WINDOW_WIDTH / 2, E.WINDOW_HEIGHT / 2, z);
 	}
-	public Background(String imgPath, float x, float y, float z) {
+	public NebulaSceneBackground(String imgPath, float x, float y, float z) {
 		super(x, y, z, 0, 255);
 		this.background = E.loadImage(E.BASE_PATH + imgPath);
 		this.normal_z = z;

@@ -12,4 +12,12 @@ public abstract class Scene extends Drawable {
 	
 	public abstract void draw();
 	public abstract void transit(Scene fromScene);
+	
+	public void click(int mouseX, int mouseY) {
+		// no op
+	}
+	
+	public void press(char key) {
+		// no op
+	}
 }

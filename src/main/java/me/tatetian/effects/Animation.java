@@ -28,6 +28,18 @@ public abstract class Animation {
 			realStartTime = startTime + delayTime;
 		}
 	}
+	
+	public void restart() {
+		running = true;
+		startTime = E.millis();
+		realStartTime = startTime + delayTime;
+		progress = 0;
+	}
+	
+	public void stop() {
+		running = false;		
+		progress = 1;
+	}
 
 	public void pause() {
 		running = false;
@@ -56,8 +68,8 @@ public abstract class Animation {
 		return progress;
 	}
 	
-	public boolean finished() {
-		return progress == 1;
+	public void end() {
+		// no op
 	}
 	
 	public boolean forever() {

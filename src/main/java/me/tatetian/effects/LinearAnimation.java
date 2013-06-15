@@ -1,7 +1,7 @@
 package me.tatetian.effects;
 
 public abstract class LinearAnimation extends Animation {
-	private float from, to;
+	protected float from, to;
 	
 	public LinearAnimation(int millisDuration, 
 												 int from, int to) {
