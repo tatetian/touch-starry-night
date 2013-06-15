@@ -13,7 +13,6 @@ public class TransparencyAnimation extends LinearAnimation {
 
 	@Override
 	public void update() {
-		System.out.println(value());
 		object.alpha( (int) value() );
 	}
 }

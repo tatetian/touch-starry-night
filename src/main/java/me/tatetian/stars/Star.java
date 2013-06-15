@@ -7,9 +7,18 @@ public class Star {
 		this(0, 0, 0);
 	}
 	
+	public Star(Star another) {
+		this(another.x, another.y, another.z);
+	}
+	
 	public Star(float x, float y, float z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+	}
+	
+	@Override
+	public String toString() {
+		return "<" + x + ", " + y + ", " + z  + ">";
 	}
 }

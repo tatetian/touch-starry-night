@@ -18,7 +18,7 @@ void main() {
   
   gl_Position = clip + projection * vec4(offset, 0, 0);
   
-  texCoord = (vec2(0.5) + offset / weight) * 2.0;
+  texCoord = (vec2(0.5) + offset / weight); 
   
   vertColor = color;
 }

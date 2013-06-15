@@ -16,19 +16,18 @@ public class StarText extends DrawableObject implements Showable, Transparentibl
 	private StarsRenderable renderer; 
 	private Stars nebula;
 	
-	private static final int MIN_ALPHA = 0, MAX_ALPHA = 150;
-	
 	public StarText(String starImgPath, 
 									String text, int textSize, 
 									float x, float y, float z) {
-		super(x, y, 0, 0, 255);
+		super(x, y, z, 0, 255);
+		MAX_ALPHA = 50;
 		// prepare to process text
 	  RG.init(E);	  
 	  RFont font =new RFont(E.BASE_PATH + "new_spirit.ttf");
 	  font.setAlign(RFont.CENTER);
 	  font.setSize(textSize);	  
   	RG.setPolygonizer(RG.UNIFORMLENGTH);
-  	RG.setPolygonizerLength(textSize / 15);
+  	RG.setPolygonizerLength(textSize / 12);
   	float line_height = font.getLineSpacing();
   	
 	  // init stars
@@ -40,12 +39,12 @@ public class StarText extends DrawableObject implements Showable, Transparentibl
 	  	grp.translate(0, delta_y);
 	  	RPoint[] points = grp.getPoints();
 	  	for(RPoint p : points) 
-	  		starList.add(new Star(p.x, p.y, z));
+	  		starList.add(new Star(p.x, p.y, 0));
 	  	delta_y += line_height;
 	  }
 		stars = starList.toArray(new Star[]{});
-		
-		renderer = new SpriteStarsRenderer(E, starImgPath, 100); 
+//		stars = new Star[] { new Star(0, 0, 0) };
+		renderer = new SpriteStarsRenderer(E, starImgPath, 10); 
 	  nebula = new Stars(stars, renderer);
 	}
 	

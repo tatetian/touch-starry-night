@@ -31,7 +31,7 @@ public class SpriteStarsRenderer implements StarsRenderable {
 		E.shader(starShader, E.POINTS);
 		E.strokeWeight(weight);
 	  E.strokeCap(E.SQUARE);
-	  E.stroke(starColor);
+	  //E.stroke(starColor);
 	  for(Star star : stars)
 	  	E.point(star.x, star.y, star.z);
 	  E.resetShader();

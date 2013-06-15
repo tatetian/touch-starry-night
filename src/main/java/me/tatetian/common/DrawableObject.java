@@ -10,6 +10,8 @@ public abstract class DrawableObject extends Drawable implements Transparentible
 	protected float angle;
 	protected int alpha;
 	private int delay_time;
+
+	protected int MIN_ALPHA = 0, MAX_ALPHA = 255;
 	
 	public DrawableObject() {
 		this(0, 0, 0, 0, 255);
@@ -37,18 +39,18 @@ public abstract class DrawableObject extends Drawable implements Transparentible
 	}
 	
 	public void fadeIn(int millis) {
-		fade(millis, 255);
+		fade(millis, MIN_ALPHA, MAX_ALPHA);
 	}
 	
 	public void fadeOut(int millis) {
-		fade(millis, 0);
+		fade(millis, MAX_ALPHA, MIN_ALPHA);
 	}
 
-	public void fade(int millis, int new_alpha) {
+	public void fade(int millis, int from_alpha, int to_alpha) {
 		if(millis > 0)
-			addAnimation(new TransparencyAnimation(this, millis, alpha, new_alpha));
+			addAnimation(new TransparencyAnimation(this, millis, from_alpha, to_alpha));
 		else
-			alpha = new_alpha;
+			alpha = to_alpha;
 	}
 	
 	protected void addAnimation(Animation a) {

@@ -14,8 +14,18 @@ public class Stars extends Drawable {
 	public void draw() {
 		renderer.draw(stars);
 	}
-	
+
 	public void animate(Animator animator) {
 		animator.update(stars);
+	}
+	
+	public Star[] stars() {
+		return stars;
+	}
+	
+	@Override
+	public Stars clone() {
+		Star[] clonedStars = stars.clone();
+		return new Stars(clonedStars, renderer);
 	}
 }

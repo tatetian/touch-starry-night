@@ -12,6 +12,7 @@ public abstract class Animation {
 	private float progress = 0;
 	private int delayTime = 0;
 	private int realStartTime = -1;
+	private boolean running = false;
 	
 	/**
 	 * @param duration is in millisecond
@@ -21,8 +22,15 @@ public abstract class Animation {
 	}
 	
 	public void start() {		
-		this.startTime = E.millis();
-		this.realStartTime = startTime + delayTime;
+		running = true;
+		if(startTime < 0) {
+			startTime = E.millis();
+			realStartTime = startTime + delayTime;
+		}
+	}
+
+	public void pause() {
+		running = false;
 	}
 	
 	public void delay(int millis) {
@@ -30,7 +38,7 @@ public abstract class Animation {
 	}
 	
 	public void step() {
-		if(startTime >= 0) {
+		if(running) {
 			int now = E.millis();
 			if(now > realStartTime) {
 				// calculate progress if time is limited
