@@ -21,18 +21,18 @@ public class M51NebulaScene extends NebulaScene {
 	@Override
 	protected void setup() {
 		// init background
-		background = new NebulaSceneBackground("max.png", - E.WINDOW_DEPTH / 10);
+		background = new NebulaSceneBackground("max.png", E.WINDOW_DEPTH);
 		//background.show(4000);
 		background.rotate(0.0004f, -1);
 		// init nubulas
-		nebula	 = new M51Nebula(E.WINDOW_WIDTH / 2, E.WINDOW_HEIGHT / 2, - E.WINDOW_DEPTH / 10);
+		nebula	 = new M51Nebula(E.WINDOW_WIDTH / 2, E.WINDOW_HEIGHT / 2, E.WINDOW_DEPTH);
 		//nebula.show(4000);
 		//nebula.rotate(0.0004f, -1);
 		// init text
 		starText = new StarText("small_stars/4.png", 
 														"For my part I know nothing with any certainty,\n" +
 														" but the sight of the stars makes me dream.", 100,
-														E.WINDOW_WIDTH / 2, E.WINDOW_HEIGHT / 2, - E.WINDOW_DEPTH / 10 );
+														E.WINDOW_WIDTH / 2, E.WINDOW_HEIGHT / 2, E.WINDOW_DEPTH );
 		starText.hide(0);
 		
 		stars2TextAnimator = new Star2TextAnimationMaker(starText, nebula.stars());
@@ -42,7 +42,6 @@ public class M51NebulaScene extends NebulaScene {
 	protected void _draw() {
 		E.pushMatrix();
 		E.translate(E.WINDOW_WIDTH / 2, E.WINDOW_HEIGHT / 2);
-		E.box(0.5f);
 		E.popMatrix();
 		// draw nebula background
 		background.draw();

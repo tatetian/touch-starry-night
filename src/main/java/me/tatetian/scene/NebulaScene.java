@@ -10,7 +10,9 @@ public abstract class NebulaScene extends Scene {
 	 * Nebulas Cache
 	 * =======================================================================*/
 	public static enum Name {
-		M51
+		MOON, M51, CHE2, VENUS, HIP_13454, 
+		CHE3, LOU1, DA5, CHUAN3, TIAN1, HIP_10064,
+		HIP_10670, LOU3 
 	}
 	public static Map<Name, NebulaScene> scene_cache;
 	public static NebulaScene get(Name name) {
@@ -23,7 +25,8 @@ public abstract class NebulaScene extends Scene {
 				scene = new M51NebulaScene();
 				break;
 			default:
-				throw new RuntimeException("Can't get scene by name " + name);
+				// no implemented yet!
+				return null;
 			}
 			scene_cache.put(name, scene);
 		}

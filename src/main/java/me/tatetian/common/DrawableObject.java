@@ -73,6 +73,10 @@ public abstract class DrawableObject extends Drawable implements Transparentible
 	public void alpha(int alpha) {
 		this.alpha = alpha;
 	}
+
+	public int alpha() {
+		return alpha;
+	}
 	
 	public void addAngles(float x_angle_delta, float y_angle_delta, float z_angle_delta) {
 		angle += z_angle_delta;
