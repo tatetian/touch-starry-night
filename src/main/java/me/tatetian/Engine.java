@@ -50,12 +50,13 @@ public class Engine extends PApplet {
 	  
 		// init variables
 		controller 		= new Controller(this);
-		mainScene 		= new MainScene();
 
 		animations 		= new LinkedList<Animation>();
 		newlyAdded		= new ArrayList<Animation>();
 		animMemory		= new HashMap<Scene, LinkedList<Animation>>();
-		
+
+		// init scenes
+		mainScene 		= new MainScene();
 		currentScene 	= mainScene;
 //		currentScene  = NebulaScene.get(NebulaScene.Name.M51) ;
 		//		currentScene 	= new TextScene();

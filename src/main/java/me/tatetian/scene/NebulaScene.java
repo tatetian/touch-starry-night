@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.tatetian.Engine;
+import me.tatetian.effects.SceneTransition;
+import me.tatetian.effects.ZoomFadeSceneTransition;
 
 public abstract class NebulaScene extends Scene {
 	/* =======================================================================
@@ -33,6 +35,7 @@ public abstract class NebulaScene extends Scene {
 		return scene;
 	}
 	
+	
 	@Override
 	protected void beforeDraw() {
 		G.imageMode(G.CENTER);
@@ -40,13 +43,22 @@ public abstract class NebulaScene extends Scene {
 		G.hint(G.DISABLE_DEPTH_TEST);
 		G.lights();
 	}
+
 	
 	/**
 	 * All nebulas scenes have the same transition
 	 * */
 	@Override
 	public void transit(Scene fromScene) {
+		// if in transition, no effect
+		if(this.fromScene != null) return;
 		
+		System.out.println("nebula <= main");
+		this.fromScene = fromScene;
+		if(fromScene instanceof MainScene) {
+			SceneTransition trans = new ZoomFadeSceneTransition(1000, fromScene, this, true);
+			E.addAnimation(trans);
+		}
 	}
 	
 	@Override

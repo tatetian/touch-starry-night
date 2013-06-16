@@ -18,18 +18,23 @@ public abstract class Scene extends DrawableObject {
 	
 	protected abstract void setup();
 	
+	protected Scene fromScene = null;
+	
 	@Override
 	public final void draw() {
 		beforeDraw();
+		
 		G.beginDraw();
 		drawGraphics();
 		G.endDraw();
-		afterDraw();		
 		
 		E.pushMatrix();
 		transform();
+		E.tint(E.color(255, alpha));
 		E.image(G, 0, 0);
 		E.popMatrix();
+				
+		afterDraw();		
 	}
 	
 	@Override
@@ -45,7 +50,12 @@ public abstract class Scene extends DrawableObject {
 	}
 	
 	protected void afterDraw() {
-		// noop
+		if(fromScene != null)
+			fromScene.draw();
+	}
+	
+	public void resetFromScene() {
+		fromScene = null;
 	}
 	
 	protected abstract void drawGraphics(); 

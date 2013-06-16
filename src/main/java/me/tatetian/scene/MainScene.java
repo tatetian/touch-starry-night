@@ -4,7 +4,9 @@ import me.tatetian.common.Drawable;
 import me.tatetian.common.DrawableObject;
 import me.tatetian.common.Positionable;
 import me.tatetian.effects.Animation;
+import me.tatetian.effects.SceneTransition;
 import me.tatetian.effects.TransparencyAnimation;
+import me.tatetian.effects.ZoomFadeSceneTransition;
 import processing.core.PGraphics;
 import processing.core.PImage;
 import me.tatetian.scene.NebulaScene.Name;
@@ -36,7 +38,15 @@ public class MainScene extends Scene {
 
 	@Override
 	public void transit(Scene fromScene) {
+		// if in transition, no effect
+		if(this.fromScene != null) return;
+		System.out.println("main <= nebula");
 		
+		this.fromScene = fromScene;
+		if(fromScene instanceof NebulaScene) {
+			SceneTransition trans = new ZoomFadeSceneTransition(1000, fromScene, this, false);
+			E.addAnimation(trans);
+		}
 	}
 	
 	private static PImage loadImage(String fileName) {

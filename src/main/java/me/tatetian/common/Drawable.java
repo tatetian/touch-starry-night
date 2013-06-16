@@ -14,5 +14,7 @@ public abstract class Drawable {
 		this.G = G;
 	}
 	
+	public PGraphics G() { return G; }
+	
 	public abstract void draw();
 }
