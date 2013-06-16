@@ -9,6 +9,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import ddf.minim.AudioPlayer;
+import ddf.minim.Minim;
+
 import me.tatetian.common.Drawable;
 import me.tatetian.effects.Animation;
 import me.tatetian.scene.MainScene;
@@ -64,6 +67,12 @@ public class Engine extends PApplet {
 //		switchScene(NebulaScene.get(NebulaScene.Name.M51) );
 		//		currentScene 	= new TextScene();		
 		TouchEventHandler.start(this);
+		
+		// play background music
+		Minim minim = new Minim(this);
+		AudioPlayer player = minim.loadFile(BASE_PATH + "sound/background.mp3");
+	  player.play();
+	  player.loop();
 	}
 	
 	public void draw() {
