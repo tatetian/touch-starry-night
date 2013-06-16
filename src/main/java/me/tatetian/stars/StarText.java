@@ -24,7 +24,7 @@ public class StarText extends DrawableObject implements Showable, Transparentibl
 									String text, int textSize, 
 									float x, float y, float z) {
 		super(G, x, y, z, 0, 255);
-		MAX_ALPHA = 50;
+		MAX_ALPHA = 255;
 		// prepare to process text
 	  RG.init(E);	  
 	  RFont font =new RFont(Engine.BASE_PATH + "new_spirit.ttf");
@@ -44,7 +44,7 @@ public class StarText extends DrawableObject implements Showable, Transparentibl
 	  	RPoint[] points = grp.getPoints();
 	  	for(RPoint p : points) 
 	  		starList.add(new Star(p.x, p.y, 0));
-	  	delta_y += line_height;
+	  	delta_y += 1.2f *line_height;
 	  }
 		stars = starList.toArray(new Star[]{});
 //		stars = new Star[] { new Star(0, 0, 0) };
@@ -56,7 +56,8 @@ public class StarText extends DrawableObject implements Showable, Transparentibl
 		if(alpha > 0) {
 			G.pushMatrix();
 			transform();
-			renderer.setStarColor(E.color(255, 255, 255, alpha));
+			System.out.println(alpha);
+			renderer.setStarColor(E.color(alpha, alpha));
 			nebula.draw();
 			G.popMatrix();
 		}

@@ -33,8 +33,7 @@ public abstract class NebulaScene extends Scene {
 			scene_cache.put(name, scene);
 		}
 		return scene;
-	}
-	
+	}	
 	
 	@Override
 	protected void beforeDraw() {

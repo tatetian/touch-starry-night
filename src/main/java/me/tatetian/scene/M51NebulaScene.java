@@ -1,6 +1,7 @@
 package me.tatetian.scene;
 
 import processing.core.PGraphics;
+import me.tatetian.effects.Animation;
 import me.tatetian.effects.Star2TextAnimationMaker;
 import me.tatetian.effects.Star2TextAnimationMaker.Stars2TextAnimation;
 import me.tatetian.stars.Nebula;
@@ -18,27 +19,36 @@ public class M51NebulaScene extends NebulaScene {
 	private Star2TextAnimationMaker stars2TextAnimator;
 	
 	private int lastClickTime = -1;
+	private Animation nebulaRotation;
+	private boolean textShown = false;
 	
 	@Override
 	protected void setup() {
 		// init background
 		background = new NebulaSceneBackground(G, "max.png", E.WIN_D / 3);
-		//background.show(4000);
-		background.rotate(0.0004f, -1);
 		// init nubulas
 		nebula	 = new M51Nebula(G, E.WIN_W / 2, E.WIN_H / 2, E.WIN_D);
-		//nebula.show(4000);
-		//nebula.rotate(0.0004f, -1);
 		// init text
 		starText = new StarText(G, "small_stars/4.png", 
 														"For my part I know nothing with any certainty,\n" +
-														" but the sight of the stars makes me dream.", 100,
+														" but the sight of the stars makes me dream.", 120,
 														E.WIN_W / 2, E.WIN_H / 2, E.WIN_D );
 		starText.hide(0);
-		
-		stars2TextAnimator = new Star2TextAnimationMaker(starText, nebula.stars());
 	}
 
+	@Override
+	public void show() {		
+		background.show(4000);
+		background.rotate(0.0004f, -1);
+		nebula.reset();		
+		nebula.show(4000);
+		nebulaRotation = nebula.rotate(0.0004f, -1);
+		starText.reset();		
+		stars2TextAnimator = new Star2TextAnimationMaker(starText, nebula.stars(), nebula);
+		
+		lastClickTime = E.millis();
+	}
+	
 	@Override
 	protected void drawGraphics() {
 		G.background(0);
@@ -52,28 +62,33 @@ public class M51NebulaScene extends NebulaScene {
 
 	@Override
 	public void click(int clientX, int clientY) {
-		if(lastClickTime < 0) {
+		if(E.millis() - lastClickTime > 4000) {
 			lastClickTime = E.millis();
-			
-			background.hide(2000);
-			starText.delay(2000);
-			starText.show(3000);
-		//	starText.show(0);
-			// Moving star to form the shape of text
-			Stars2TextAnimation anim = stars2TextAnimator.toText(2000);
-			//anim.delay(1000);
-			E.addAnimation(anim);
-		}
-		else if(E.millis() - lastClickTime > 5000) {
-			lastClickTime = -1;
-			
-			starText.hide(4000);
-			background.delay(2000);
-			background.show(2000);
-			// Moving star back to their origin positions 
-			Stars2TextAnimation anim = stars2TextAnimator.backStars(4000);
-			anim.delay(1000);
-			E.addAnimation(anim);
+			if(!textShown) {
+				nebulaRotation.pause();
+				background.hide(2000);
+				starText.delay(1000);
+				starText.show(1500);
+			//	starText.show(0);
+				// Moving star to form the shape of text
+				Stars2TextAnimation anim = stars2TextAnimator.toText(2000);
+				//anim.delay(1000);
+				E.addAnimation(anim);
+				
+				textShown = true;
+			}
+			else {	
+				// Moving star back to their origin positions 
+				Stars2TextAnimation anim = stars2TextAnimator.backStars(2000);
+				E.addAnimation(anim);
+	
+				starText.hide(1000);
+				background.delay(500);
+				background.show(1500);
+				nebulaRotation.resume();
+				
+				textShown = false;
+			}
 		}
 	}
 	

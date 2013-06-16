@@ -16,6 +16,9 @@ public abstract class Scene extends DrawableObject {
 	  G.camera(w/2, h/2, 1, w/2, h/2, 0, 0, 1, 0); 
 	}
 	
+	public abstract void show();
+	public void hide() {}
+	
 	protected abstract void setup();
 	
 	protected Scene fromScene = null;

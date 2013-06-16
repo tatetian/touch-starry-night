@@ -28,36 +28,43 @@ public abstract class DrawableObject extends Drawable implements Transparentible
 		this.delay_time = 0;
 	}
 	
+	public void reset() {
+		
+	}
+	
 	public void delay(int millis) {
 		delay_time += millis;
 	}
 	
-	public void rotate(float speed, int millis) {
-		addAnimation(new UniformRotationAnimation(this, -1, 0, 0, speed));
+	public Animation rotate(float speed, int millis) {
+		return addAnimation(new UniformRotationAnimation(this, -1, 0, 0, speed));
 	}
 	
-	public void move(float from_z, float to_z, int millis) {
-		addAnimation(new LinearPositionAnimation(this, millis, x, x, y, y, from_z, to_z));
+	public Animation move(float from_z, float to_z, int millis) {
+		return addAnimation(new LinearPositionAnimation(this, millis, x, x, y, y, from_z, to_z));
 	}
 	
-	public void fadeIn(int millis) {
-		fade(millis, MIN_ALPHA, MAX_ALPHA);
+	public Animation fadeIn(int millis) {
+		return fade(millis, MIN_ALPHA, MAX_ALPHA);
 	}
 	
-	public void fadeOut(int millis) {
-		fade(millis, MAX_ALPHA, MIN_ALPHA);
+	public Animation fadeOut(int millis) {
+		return fade(millis, MAX_ALPHA, MIN_ALPHA);
 	}
 
-	public void fade(int millis, int from_alpha, int to_alpha) {
+	public Animation fade(int millis, int from_alpha, int to_alpha) {
 		if(millis > 0)
-			addAnimation(new TransparencyAnimation(this, millis, from_alpha, to_alpha));
-		else
+			return addAnimation(new TransparencyAnimation(this, millis, from_alpha, to_alpha));
+		else {
 			alpha = to_alpha;
+			return null;
+		}
 	}
 	
-	protected void addAnimation(Animation a) {
+	protected Animation addAnimation(Animation a) {
 		a.delay(delay_time);
 		E.addAnimation(a);
+		return a;
 	}
 	
 	public void x(float x) {
@@ -87,6 +94,12 @@ public abstract class DrawableObject extends Drawable implements Transparentible
 		if(angle > E.TWO_PI) angle -= E.TWO_PI;
 		else if(angle < 0) angle += E.TWO_PI;
 	}
+	
+	public void angle(float angle) {
+		this.angle = angle;
+	}
+	
+	public float angle() { return angle; }
 	
 	public void transform() {		
 		G.translate(x, y, z);	

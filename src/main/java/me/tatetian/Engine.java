@@ -27,7 +27,6 @@ public class Engine extends PApplet {
 	
 	private LinkedList<Animation> animations;
 	private List<Animation> newlyAdded;
-	private Map<Scene, LinkedList<Animation>> animMemory;
 	
 	private Scene currentScene;
 	private MainScene mainScene;
@@ -53,12 +52,11 @@ public class Engine extends PApplet {
 
 		animations 		= new LinkedList<Animation>();
 		newlyAdded		= new ArrayList<Animation>();
-		animMemory		= new HashMap<Scene, LinkedList<Animation>>();
 
 		// init scenes
 		mainScene 		= new MainScene();
-		currentScene 	= mainScene;
-//		currentScene  = NebulaScene.get(NebulaScene.Name.M51) ;
+		switchScene(mainScene);
+//		switchScene(NebulaScene.get(NebulaScene.Name.M51) );
 		//		currentScene 	= new TextScene();
 	}
 	
@@ -87,14 +85,11 @@ public class Engine extends PApplet {
 		Scene fromScene = currentScene;
 		currentScene = scene;	
 		
-		saveNewAnimations();
-		pauseAnimations();
-		animMemory.put(fromScene, animations);
-		animations = animMemory.get(currentScene);
-		if(animations == null)
-			animations = new LinkedList<Animation>();
-		resumeAnimations();
-						
+		if(fromScene != null)
+			fromScene.hide();
+		animations.clear();
+		
+		currentScene.show();
 		currentScene.transit(fromScene);
 	}
 	
@@ -110,14 +105,8 @@ public class Engine extends PApplet {
 		}
 	}
 	
-	private void pauseAnimations() {
-		for(Animation a : animations) 
-			a.pause();
-	}
-	
-	private void resumeAnimations() {
-		for(Animation a : animations)
-			a.resume();
+	public LinkedList<Animation> getAnimations() {
+		return animations;
 	}
 	
 	public void doAnimations() {

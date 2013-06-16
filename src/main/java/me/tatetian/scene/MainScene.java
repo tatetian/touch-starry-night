@@ -1,5 +1,7 @@
 package me.tatetian.scene;
 
+import java.util.LinkedList;
+
 import me.tatetian.common.Drawable;
 import me.tatetian.common.DrawableObject;
 import me.tatetian.common.Positionable;
@@ -16,11 +18,32 @@ public class MainScene extends Scene {
 	private BigStar[] stars;
 	private Controller controller;
 	
+	private LinkedList<Animation> animMemory;
+	
 	@Override
 	protected void setup() {
 		background = new Background(G);
 		stars			 = BigStar.getStars(G);
 		controller = new Controller(this);
+		animMemory = new LinkedList<Animation>();
+		// TODO: init animations
+		// ...
+	}
+
+	@Override
+	public void show() {
+		for(Animation a : animMemory)
+			a.resume();
+		E.getAnimations().addAll(this.animMemory);
+	}
+	
+	@Override
+	public void hide() {
+		// save animations for next time when this scene is shown
+		animMemory.clear();
+		animMemory.addAll(E.getAnimations());
+		for(Animation a : animMemory)
+			a.pause();
 	}
 	
 	@Override
@@ -38,9 +61,9 @@ public class MainScene extends Scene {
 
 	@Override
 	public void transit(Scene fromScene) {
-		// if in transition, no effect
-		if(this.fromScene != null) return;
-		System.out.println("main <= nebula");
+		if( fromScene == null // if no fromScene, no effect
+		 || this.fromScene != null) // if in transition, no effect
+			return;
 		
 		this.fromScene = fromScene;
 		if(fromScene instanceof NebulaScene) {
