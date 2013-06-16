@@ -46,6 +46,11 @@ public class MainScene extends Scene {
 			a.pause();
 	}
 	
+//	@Override
+//	protected void beforeDraw() {
+//		G.blendMode(G.BLEND);
+//	}
+	
 	@Override
 	protected void drawGraphics() {
 		G.background(120);
@@ -168,6 +173,7 @@ public class MainScene extends Scene {
 		}
 		
 		public void press(char key) {
+			// click on stars
 			if(Character.isDigit(key) || ( 'a' <= key && key <= 'f')) {
 				int starId = Integer.parseInt("" + key, 16);
 				if(starId < starControllers.length) {

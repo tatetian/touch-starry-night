@@ -13,7 +13,7 @@ public abstract class Scene extends DrawableObject {
 		final int w = E.WIN_W, h = E.WIN_H, d = E.WIN_D;
 		G = E.createGraphics(w, h, E.P3D);
 		G.perspective(E.FOV, (float)w/h, 1, 10 * d); 
-	  G.camera(w/2, h/2, 1, w/2, h/2, 0, 0, 1, 0); 
+	  G.camera(w/2, h/2, 1, w/2, h/2, 0, 0, 1, 0);
 	}
 	
 	public abstract void show();
