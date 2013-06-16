@@ -1,5 +1,6 @@
 package me.tatetian.stars;
 
+import processing.core.PGraphics;
 import me.tatetian.common.DrawableObject;
 import me.tatetian.effects.Showable;
 
@@ -7,8 +8,8 @@ public abstract class Nebula extends DrawableObject implements Showable {
 	private Stars[] stars;
 	private float normal_z;
 
-	public Nebula(float x, float y, float z) {
-		super(x, y, z, 0, 255);
+	public Nebula(PGraphics G, float x, float y, float z) {
+		super(G, x, y, z, 0, 255);
 		normal_z = z;
 		this.stars = generateStars();
 	}
@@ -21,13 +22,13 @@ public abstract class Nebula extends DrawableObject implements Showable {
 	
 	@Override
 	public void draw() {
-		E.pushMatrix();
+		G.pushMatrix();
 		transform();
-		E.stroke(E.color(alpha));
+		G.stroke(G.color(alpha));
 		for(Stars ss : stars) {
 			ss.draw();
 		}
-		E.popMatrix();
+		G.popMatrix();
 	}
 	
 	public void show(int millis) {

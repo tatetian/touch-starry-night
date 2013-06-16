@@ -3,10 +3,13 @@ package me.tatetian.stars;
 import java.util.ArrayList;
 import java.util.List;
 
+import processing.core.PGraphics;
+
 import geomerative.RFont;
 import geomerative.RG;
 import geomerative.RGroup;
 import geomerative.RPoint;
+import me.tatetian.Engine;
 import me.tatetian.common.DrawableObject;
 import me.tatetian.common.Transparentible;
 import me.tatetian.effects.Showable;
@@ -16,14 +19,15 @@ public class StarText extends DrawableObject implements Showable, Transparentibl
 	private StarsRenderable renderer; 
 	private Stars nebula;
 	
-	public StarText(String starImgPath, 
+	public StarText(PGraphics G,
+									String starImgPath, 
 									String text, int textSize, 
 									float x, float y, float z) {
-		super(x, y, z, 0, 255);
+		super(G, x, y, z, 0, 255);
 		MAX_ALPHA = 50;
 		// prepare to process text
 	  RG.init(E);	  
-	  RFont font =new RFont(E.BASE_PATH + "new_spirit.ttf");
+	  RFont font =new RFont(Engine.BASE_PATH + "new_spirit.ttf");
 	  font.setAlign(RFont.CENTER);
 	  font.setSize(textSize);	  
   	RG.setPolygonizer(RG.UNIFORMLENGTH);
@@ -44,17 +48,17 @@ public class StarText extends DrawableObject implements Showable, Transparentibl
 	  }
 		stars = starList.toArray(new Star[]{});
 //		stars = new Star[] { new Star(0, 0, 0) };
-		renderer = new SpriteStarsRenderer(E, starImgPath, 10); 
+		renderer = new SpriteStarsRenderer(G, starImgPath, 10); 
 	  nebula = new Stars(stars, renderer);
 	}
 	
 	public void draw() {
 		if(alpha > 0) {
-			E.pushMatrix();
+			G.pushMatrix();
 			transform();
 			renderer.setStarColor(E.color(255, 255, 255, alpha));
 			nebula.draw();
-			E.popMatrix();
+			G.popMatrix();
 		}
 	}
 

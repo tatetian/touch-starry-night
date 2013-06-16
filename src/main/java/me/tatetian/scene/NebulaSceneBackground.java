@@ -1,5 +1,6 @@
 package me.tatetian.scene;
 
+import processing.core.PGraphics;
 import processing.core.PImage;
 import me.tatetian.common.DrawableObject;
 import me.tatetian.effects.Showable;
@@ -9,11 +10,11 @@ public class NebulaSceneBackground extends DrawableObject
 	private PImage background;
 	private float normal_z;
 	
-	public NebulaSceneBackground(String imgPath, float z) {
-		this(imgPath, E.WINDOW_WIDTH / 2, E.WINDOW_HEIGHT / 2, z);
+	public NebulaSceneBackground(PGraphics G, String imgPath, float z) {
+		this(G, imgPath, E.WIN_W / 2, E.WIN_H / 2, z);
 	}
-	public NebulaSceneBackground(String imgPath, float x, float y, float z) {
-		super(x, y, z, 0, 255);
+	public NebulaSceneBackground(PGraphics G, String imgPath, float x, float y, float z) {
+		super(G, x, y, z, 0, 255);
 		this.background = E.loadImage(E.BASE_PATH + imgPath);
 		this.normal_z = z;
 	}
@@ -36,11 +37,11 @@ public class NebulaSceneBackground extends DrawableObject
 
 	@Override
 	public void draw() {
-		E.pushMatrix();
-		E.translate(x, y, z);		
-		E.rotateZ(angle);		
-		E.tint(255, alpha);
-		E.image(background, 0, 0);
-		E.popMatrix();
+		G.pushMatrix();
+		G.translate(x, y, z);		
+		G.rotateZ(angle);		
+		G.tint(255, alpha);
+		G.image(background, 0, 0);
+		G.popMatrix();
 	}
 }

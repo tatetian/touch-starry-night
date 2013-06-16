@@ -15,10 +15,10 @@ import processing.core.PApplet;
 
 public class Engine extends PApplet {	
 	public final float FOV = PI / 3;
-	public final int WINDOW_WIDTH  = 1440;
-	public final int WINDOW_HEIGHT = 810;
-	public final int WINDOW_DEPTH  = (int) (- WINDOW_HEIGHT / 2 / tan(FOV / 2));
-	public final String BASE_PATH  = "../../data/";
+	public final int WIN_W  = 1440;	// width of window
+	public final int WIN_H = 810;		// height of window
+	public final int WIN_D  = (int) (- WIN_H / 2 / tan(FOV / 2));	// standard depth of window
+	public static final String BASE_PATH  = "../../data/";
 	public final int FRAME_RATE  	= 25;
 	
 	private Controller controller;
@@ -33,14 +33,14 @@ public class Engine extends PApplet {
 		Animation.setEngine(this);
 		
 		// init processing
-		size(WINDOW_WIDTH, WINDOW_HEIGHT, P3D);
+		size(WIN_W, WIN_H, P3D);
 		background(0);
 		smooth(4);
 		imageMode(CENTER);
 	  frameRate(FRAME_RATE);
 	  
-	  perspective(FOV, (float)WINDOW_WIDTH/WINDOW_HEIGHT, 1, WINDOW_DEPTH *10); 
-	  camera(width/2, height/2, 1, width/2, height/2, 0, 0, 1, 0); 
+	  perspective(FOV, (float)WIN_W/WIN_H, 1, WIN_D *10); 
+	  camera(WIN_W/2, WIN_H/2, 1, WIN_W/2, WIN_H/2, 0, 0, 1, 0); 
 	  
 	  background(0);
 	  
@@ -60,7 +60,8 @@ public class Engine extends PApplet {
 		background(0);
 		lights();
 		currentScene.draw();
-		
+//		translate(WIN_W/2, WIN_H/2, WIN_D);
+//		sphere(50);
 		doAnimations();
 	}
 	

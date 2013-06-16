@@ -16,15 +16,14 @@ public class MainScene extends Scene {
 	
 	@Override
 	protected void setup() {
-		background = new Background(E.WINDOW_WIDTH / 2, E.WINDOW_HEIGHT / 2, 
-																E.WINDOW_DEPTH);
-		stars			 = BigStar.getStars();
+		background = new Background(G);
+		stars			 = BigStar.getStars(G);
 		controller = new Controller(this);
 	}
 	
 	@Override
-	public void draw() {		
-//		E.blendMode(E.ADD);
+	protected void drawGraphics() {
+		G.background(120);
 		background.draw();
 		for(BigStar star : stars) 
 			star.draw();
@@ -44,56 +43,34 @@ public class MainScene extends Scene {
 		return E.loadImage(E.BASE_PATH + "main_scene/" + fileName);
 	}
 	
-	private static class Background extends Drawable implements Positionable {
+	private static class Background extends Drawable {
 		private PImage trees, hills, mountain, sky, grass;
-		private PGraphics canvas;
-		private float x, y, z;
 		
-		public Background(float x, float y, float z) {
-			this.x = x; this.y = y; this.z = z;
+		public Background(PGraphics G) {
+			super(G);
 			
 			sky		= loadImage("sky.png");
 			mountain = loadImage("mountain.png");
 			trees = loadImage("trees.png");
 			hills = loadImage("hills.png");
 			grass = loadImage("grass.png");
-			
-			canvas = E.createGraphics(E.WINDOW_WIDTH, E.WINDOW_HEIGHT, E.P2D);
-			canvas.smooth(4);
 		}
 		
 		@Override
 		public void draw() {		
-			// update canvas
-			canvas.beginDraw();
+			G.pushMatrix();
 			showImage(sky);
 			showImage(mountain);
 			showImage(hills);
 			showImage(trees);
 			showImage(grass);
-			canvas.endDraw();
-
-			// draw on window
-			E.pushMatrix();
-			E.translate(x, y, z);
-			E.image(canvas, 0, 0, E.WINDOW_WIDTH, E.WINDOW_HEIGHT);
-			E.popMatrix();
+			G.popMatrix();
 		}
 		
 		private void showImage(PImage img) {
-			canvas.image(img, 0, 0, E.WINDOW_WIDTH, E.WINDOW_HEIGHT);
-		}
-
-		public void x(float x) {
-			this.x = x;
-		}
-
-		public void y(float y) {
-			this.y = y;
-		}
-
-		public void z(float z) {
-			this.z = z;
+			G.imageMode(G.CORNER);
+			G.image(img, 0, 0, E.WIN_W, E.WIN_H);
+			G.imageMode(G.CENTER);
 		}
 	}
 	
@@ -102,29 +79,29 @@ public class MainScene extends Scene {
 		private float w, h;
 		private Name name;
 		// only useful when debugging
-		private static final float SCALE = (float) E.WINDOW_WIDTH / 1920;
+		private static final float SCALE = (float) E.WIN_W / 1920;
 		
-		public static BigStar[] getStars() {
+		public static BigStar[] getStars(PGraphics G) {
 			int numBigStars = 13;
 			BigStar[] stars = new BigStar[numBigStars];
-			stars[0] = new BigStar(Name.MOON, "moon.png", 1544, 263, E.WINDOW_DEPTH);
-			stars[1] = new BigStar(Name.M51, "M51.png", 993, 444,  E.WINDOW_DEPTH);
-			stars[2] = new BigStar(Name.CHE2, "che2.png", 267, 546,  E.WINDOW_DEPTH);
-			stars[3] = new BigStar(Name.VENUS, "venus.png", 827, 683,  E.WINDOW_DEPTH);
-			stars[4] = new BigStar(Name.HIP_13454, "hip 13454.png", 715, 443,  E.WINDOW_DEPTH);			
-			stars[5] = new BigStar(Name.CHE3, "che3.png", 198, 546,  E.WINDOW_DEPTH);
-			stars[6] = new BigStar(Name.LOU1, "lou1.png", 1325, 354,  E.WINDOW_DEPTH);
-			stars[7] = new BigStar(Name.DA5, "da5.png", 554, 291,  E.WINDOW_DEPTH);
-			stars[8] = new BigStar(Name.CHUAN3, "chuan3.png", 253, 214,  E.WINDOW_DEPTH);
-			stars[9] = new BigStar(Name.TIAN1, "tian1.png", 540, 81,  E.WINDOW_DEPTH);
-			stars[10] = new BigStar(Name.HIP_10064, "hip 10064.png", 784, 139,  E.WINDOW_DEPTH);
-			stars[11] = new BigStar(Name.HIP_10670, "hip 10670.png", 865, 195,  E.WINDOW_DEPTH);
-			stars[12] = new BigStar(Name.LOU3, "lou3.png", 1155, 196,  E.WINDOW_DEPTH);			
+			stars[0] = new BigStar(G, Name.MOON, "moon.png", 1544, 263, 0);
+			stars[1] = new BigStar(G, Name.M51, "M51.png", 993, 444,  0);
+			stars[2] = new BigStar(G, Name.CHE2, "che2.png", 267, 546,  0);
+			stars[3] = new BigStar(G, Name.VENUS, "venus.png", 827, 683,  0);
+			stars[4] = new BigStar(G, Name.HIP_13454, "hip 13454.png", 715, 443,  0);			
+			stars[5] = new BigStar(G, Name.CHE3, "che3.png", 198, 546,  0);
+			stars[6] = new BigStar(G, Name.LOU1, "lou1.png", 1325, 354,  0);
+			stars[7] = new BigStar(G, Name.DA5, "da5.png", 554, 291,  0);
+			stars[8] = new BigStar(G, Name.CHUAN3, "chuan3.png", 253, 214,  0);
+			stars[9] = new BigStar(G, Name.TIAN1, "tian1.png", 540, 81,  0);
+			stars[10] = new BigStar(G, Name.HIP_10064, "hip 10064.png", 784, 139,  0);
+			stars[11] = new BigStar(G, Name.HIP_10670, "hip 10670.png", 865, 195,  0);
+			stars[12] = new BigStar(G, Name.LOU3, "lou3.png", 1155, 196,  0);			
 			return stars;
 		}
 		
-		public BigStar(Name name, String imagePath, float x, float y, float z) {
-			super(SCALE * x, SCALE * y, z + 1, 0, 0); // hidden by default
+		public BigStar(PGraphics G, Name name, String imagePath, float x, float y, float z) {
+			super(G, SCALE * x, SCALE * y, z, 0, 0); // hidden by default
 			this.name = name;
 			starImage = loadImage("stars/" + imagePath);
 			this.w = SCALE * starImage.width;
@@ -134,12 +111,12 @@ public class MainScene extends Scene {
 		@Override
 		public void draw() {
 			if(alpha > 0) {
-				E.pushMatrix();
+				G.pushMatrix();
 				transform();
-				E.tint(E.color(255, alpha));
-				E.image(starImage, 0, 0, w, h);
-				E.tint(255);
-				E.popMatrix();
+				G.tint(E.color(255, alpha));
+				G.image(starImage, 0, 0, w, h);
+				G.tint(255);
+				G.popMatrix();
 			}
 		}
 	}

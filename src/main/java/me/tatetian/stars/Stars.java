@@ -1,8 +1,6 @@
 package me.tatetian.stars;
 
-import me.tatetian.common.Drawable;
-
-public class Stars extends Drawable {
+public class Stars {
 	private StarsRenderable renderer;
 	private Star[] stars; 
 	

@@ -1,5 +1,6 @@
 package me.tatetian.scene;
 
+import processing.core.PGraphics;
 import me.tatetian.effects.Star2TextAnimationMaker;
 import me.tatetian.effects.Star2TextAnimationMaker.Stars2TextAnimation;
 import me.tatetian.stars.Nebula;
@@ -21,28 +22,26 @@ public class M51NebulaScene extends NebulaScene {
 	@Override
 	protected void setup() {
 		// init background
-		background = new NebulaSceneBackground("max.png", E.WINDOW_DEPTH);
+		background = new NebulaSceneBackground(G, "max.png", E.WIN_D / 3);
 		//background.show(4000);
 		background.rotate(0.0004f, -1);
 		// init nubulas
-		nebula	 = new M51Nebula(E.WINDOW_WIDTH / 2, E.WINDOW_HEIGHT / 2, E.WINDOW_DEPTH);
+		nebula	 = new M51Nebula(G, E.WIN_W / 2, E.WIN_H / 2, E.WIN_D);
 		//nebula.show(4000);
 		//nebula.rotate(0.0004f, -1);
 		// init text
-		starText = new StarText("small_stars/4.png", 
+		starText = new StarText(G, "small_stars/4.png", 
 														"For my part I know nothing with any certainty,\n" +
 														" but the sight of the stars makes me dream.", 100,
-														E.WINDOW_WIDTH / 2, E.WINDOW_HEIGHT / 2, E.WINDOW_DEPTH );
+														E.WIN_W / 2, E.WIN_H / 2, E.WIN_D );
 		starText.hide(0);
 		
 		stars2TextAnimator = new Star2TextAnimationMaker(starText, nebula.stars());
 	}
 
 	@Override
-	protected void _draw() {
-		E.pushMatrix();
-		E.translate(E.WINDOW_WIDTH / 2, E.WINDOW_HEIGHT / 2);
-		E.popMatrix();
+	protected void drawGraphics() {
+		G.background(0);
 		// draw nebula background
 		background.draw();
 		// draw stars
@@ -79,8 +78,8 @@ public class M51NebulaScene extends NebulaScene {
 	}
 	
 	public static class M51Nebula extends Nebula {
-		public M51Nebula(float x, float y, float z) {
-			super(x, y, z);
+		public M51Nebula(PGraphics G, float x, float y, float z) {
+			super(G, x, y, z);
 		}
 
 		@Override
@@ -88,25 +87,25 @@ public class M51NebulaScene extends NebulaScene {
 			Stars[] stars = new Stars[7];
 			stars[0] = new Stars(
 					StarsGenerator.generate(5, E.width, E.height, 1.5f, -200, 0), 
-					new SpriteStarsRenderer(E, "small_stars/1.png", 50) );
+					new SpriteStarsRenderer(G, "small_stars/1.png", 50) );
 			stars[1] = new Stars(
 					StarsGenerator.generate(10, E.width , E.height, 1.5f, -200, 0), 
-					new SpriteStarsRenderer(E, "small_stars/2.png", 50) );
+					new SpriteStarsRenderer(G, "small_stars/2.png", 50) );
 			stars[2] = new Stars(
 					StarsGenerator.generate(2, E.width, E.height, 1.5f, 0, 200), 
-					new SpriteStarsRenderer(E, "small_stars/3.png", 50) );
+					new SpriteStarsRenderer(G, "small_stars/3.png", 50) );
 			stars[3] = new Stars(
 					StarsGenerator.generate(25, E.width, E.height, 1.75f, -100, 0), 
-					new SpriteStarsRenderer(E, "small_stars/4.png", 50) );
+					new SpriteStarsRenderer(G, "small_stars/4.png", 50) );
 			stars[4] = new Stars(
 					StarsGenerator.generate(10, E.width, E.height, 1.5f, -200, -100), 
-					new SpriteStarsRenderer(E, "small_stars/5.png", 50) );
+					new SpriteStarsRenderer(G, "small_stars/5.png", 50) );
 			stars[5] = new Stars(
 					StarsGenerator.generate(6, E.width, E.height, 1.5f, -1200, -200), 
-					new SpriteStarsRenderer(E, "small_stars/6.png", 20) );
+					new SpriteStarsRenderer(G, "small_stars/6.png", 20) );
 			stars[6] = new Stars(
 					StarsGenerator.generate(10, E.width, E.height, 2f, -200, 0), 
-						new SpriteStarsRenderer(E, "small_stars/7.png", 50) );
+						new SpriteStarsRenderer(G, "small_stars/7.png", 50) );
 			
 //
 //			Stars[] stars = new Stars[1];

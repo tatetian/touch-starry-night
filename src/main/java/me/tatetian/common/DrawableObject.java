@@ -1,5 +1,6 @@
 package me.tatetian.common;
 
+import processing.core.PGraphics;
 import me.tatetian.effects.Animation;
 import me.tatetian.effects.LinearPositionAnimation;
 import me.tatetian.effects.TransparencyAnimation;
@@ -13,11 +14,12 @@ public abstract class DrawableObject extends Drawable implements Transparentible
 
 	protected int MIN_ALPHA = 0, MAX_ALPHA = 255;
 	
-	public DrawableObject() {
-		this(0, 0, 0, 0, 255);
+	public DrawableObject(PGraphics G) {
+		this(G, 0, 0, 0, 0, 255);
 	}
 	
-	public DrawableObject(float x, float y, float z, float angle, int alpha) {
+	public DrawableObject(PGraphics G, float x, float y, float z, float angle, int alpha) {
+		super(G);
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -85,7 +87,7 @@ public abstract class DrawableObject extends Drawable implements Transparentible
 	}
 	
 	public void transform() {		
-		E.translate(x, y, z);	
-		E.rotateZ(angle);
+		G.translate(x, y, z);	
+		G.rotateZ(angle);
 	}
 }

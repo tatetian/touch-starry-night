@@ -33,6 +33,14 @@ public abstract class NebulaScene extends Scene {
 		return scene;
 	}
 	
+	@Override
+	protected void beforeDraw() {
+		G.imageMode(G.CENTER);
+		G.blendMode(G.ADD);
+		G.hint(G.DISABLE_DEPTH_TEST);
+		G.lights();
+	}
+	
 	/**
 	 * All nebulas scenes have the same transition
 	 * */
@@ -40,13 +48,4 @@ public abstract class NebulaScene extends Scene {
 	public void transit(Scene fromScene) {
 		
 	}
-	
-	@Override
-	public void draw() {	
-		E.blendMode(E.ADD);
-		E.hint(E.DISABLE_DEPTH_TEST);
-		_draw();
-	}
-	
-	protected abstract void _draw(); 
 }
