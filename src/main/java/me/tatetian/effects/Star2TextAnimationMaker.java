@@ -75,7 +75,6 @@ public class Star2TextAnimationMaker {
 				ms.x = q * os.x + p * ts.x ;
 				ms.y = q * os.y + p * ts.y ;
 				ms.z = q * os.z + p * ts.z ;
-				System.out.println(p + ": ms = " + ms + ", os = " + os + ", ts = " + ts);
 			}
 		}
 	}
@@ -87,7 +86,6 @@ public class Star2TextAnimationMaker {
 
 		@Override
 		public void update() {			
-			System.out.println("back stars!!");
 		}
 	}
 }

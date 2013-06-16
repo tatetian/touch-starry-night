@@ -14,6 +14,8 @@ public abstract class Animation {
 	private int realStartTime = -1;
 	private boolean running = false;
 	
+	private int pauseTime = -1;
+	
 	/**
 	 * @param duration is in millisecond
 	 * */
@@ -43,6 +45,13 @@ public abstract class Animation {
 
 	public void pause() {
 		running = false;
+		pauseTime = E.millis();
+	}
+	
+	public void resume() {
+		int now = E.millis();
+		realStartTime += (now - pauseTime);
+		running = true;
 	}
 	
 	public void delay(int millis) {

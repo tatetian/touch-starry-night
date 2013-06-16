@@ -48,4 +48,11 @@ public abstract class NebulaScene extends Scene {
 	public void transit(Scene fromScene) {
 		
 	}
+	
+	@Override
+	public void press(char key) {
+		// if press 'm', then go back to main scene
+		if(key == 'm')
+			E.switchScene(E.getMainScene());
+	}
 }

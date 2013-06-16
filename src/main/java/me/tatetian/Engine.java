@@ -1,9 +1,11 @@
 package me.tatetian;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import me.tatetian.common.Drawable;
 import me.tatetian.effects.Animation;
@@ -22,8 +24,10 @@ public class Engine extends PApplet {
 	public final int FRAME_RATE  	= 25;
 	
 	private Controller controller;
+	
 	private LinkedList<Animation> animations;
 	private List<Animation> newlyAdded;
+	private Map<Scene, LinkedList<Animation>> animMemory;
 	
 	private Scene currentScene;
 	private MainScene mainScene;
@@ -50,6 +54,7 @@ public class Engine extends PApplet {
 
 		animations 		= new LinkedList<Animation>();
 		newlyAdded		= new ArrayList<Animation>();
+		animMemory		= new HashMap<Scene, LinkedList<Animation>>();
 		
 		currentScene 	= mainScene;
 //		currentScene  = NebulaScene.get(NebulaScene.Name.M51) ;
@@ -73,13 +78,22 @@ public class Engine extends PApplet {
 		controller.press(key);
 	}
 	
-	public boolean isMainScene() {
-		return currentScene == mainScene ;
+	public Scene getMainScene() {
+		return mainScene ;
 	}
 	
 	public void switchScene(Scene scene) {
 		Scene fromScene = currentScene;
-		currentScene = scene;
+		currentScene = scene;	
+		
+		saveNewAnimations();
+		pauseAnimations();
+		animMemory.put(fromScene, animations);
+		animations = animMemory.get(currentScene);
+		if(animations == null)
+			animations = new LinkedList<Animation>();
+		resumeAnimations();
+						
 		currentScene.transit(fromScene);
 	}
 	
@@ -88,11 +102,25 @@ public class Engine extends PApplet {
 		a.start();
 	}
 	
-	public void doAnimations() {
+	private void saveNewAnimations() {
 		if(!newlyAdded.isEmpty()) {
 			animations.addAll(newlyAdded);
 			newlyAdded.clear();
 		}
+	}
+	
+	private void pauseAnimations() {
+		for(Animation a : animations) 
+			a.pause();
+	}
+	
+	private void resumeAnimations() {
+		for(Animation a : animations)
+			a.resume();
+	}
+	
+	public void doAnimations() {
+		saveNewAnimations();
 		
 		Iterator<Animation> iter = animations.iterator() ;
 		while(iter.hasNext()) {
