@@ -14,16 +14,17 @@ import processing.core.PImage;
 import me.tatetian.scene.NebulaScene.Name;
 
 public class MainScene extends Scene {
-	private Background background;
-	private BigStar[] stars;
+	private Foreground foreground;
+	private Sky sky;
 	private Controller controller;
 	
 	private LinkedList<Animation> animMemory;
 	
 	@Override
 	protected void setup() {
-		background = new Background(G);
-		stars			 = BigStar.getStars(G);
+		foreground = new Foreground(G);
+		sky 			 = new Sky(G);
+		
 		controller = new Controller(this);
 		animMemory = new LinkedList<Animation>();
 		// TODO: init animations
@@ -46,17 +47,24 @@ public class MainScene extends Scene {
 			a.pause();
 	}
 	
-//	@Override
-//	protected void beforeDraw() {
+	@Override
+	protected void beforeDraw() {
 //		G.blendMode(G.BLEND);
-//	}
+		super.beforeDraw();
+		sky.prepare();
+	}
 	
 	@Override
 	protected void drawGraphics() {
+//		G.blendMode(G.BLEND);
+//		G.hint(G.ENABLE_DEPTH_TEST);
 		G.background(120);
-		background.draw();
-		for(BigStar star : stars) 
-			star.draw();
+		sky.draw();
+		foreground.draw();		
+//		G.blendMode(G.ADD);
+//		G.hint(G.DISABLE_DEPTH_TEST);
+//		for(BigStar star : stars) 
+//			star.draw();
 	}
 	
 	@Override
@@ -81,13 +89,52 @@ public class MainScene extends Scene {
 		return E.loadImage(E.BASE_PATH + "main_scene/" + fileName);
 	}
 	
-	private static class Background extends Drawable {
-		private PImage trees, hills, mountain, sky, grass;
+	private static class Sky extends Drawable {
+		private PImage skyImg;
+		private BigStar[] stars;
+		private PGraphics sky;
 		
-		public Background(PGraphics G) {
+		public Sky(PGraphics G) {
+			super(G);
+				
+			this.skyImg	= loadImage("sky.png");
+			this.sky		= E.createGraphics(E.WIN_W, E.WIN_H, E.P2D);
+			this.stars  = BigStar.getStars(sky);
+		}
+
+		/*
+		 * this is a workaround for limitation on concurrent PGraphics
+		 * must be called before draw()
+		 * */
+		public void prepare() {
+			sky.beginDraw();
+			sky.blendMode(sky.BLEND);
+			sky.smooth(4);
+			sky.background(0);
+			sky.imageMode(sky.CORNER);
+			sky.image(skyImg, 0, 0, sky.width, sky.height);
+			sky.imageMode(sky.CENTER);
+			for(BigStar bs : stars) {
+				bs.draw();
+			}
+			sky.endDraw();
+		}
+		
+		@Override
+		public void draw() {
+			G.imageMode(G.CORNER);
+			G.image(sky, 0, 0, E.WIN_W, E.WIN_H);
+		}
+		
+		public BigStar[] stars() { return stars; }
+	}
+	
+	private static class Foreground extends Drawable {
+		private PImage trees, hills, mountain, grass;
+		
+		public Foreground(PGraphics G) {
 			super(G);
 			
-			sky		= loadImage("sky.png");
 			mountain = loadImage("mountain.png");
 			trees = loadImage("trees.png");
 			hills = loadImage("hills.png");
@@ -97,7 +144,6 @@ public class MainScene extends Scene {
 		@Override
 		public void draw() {		
 			G.pushMatrix();
-			showImage(sky);
 			showImage(mountain);
 			showImage(hills);
 			showImage(trees);
@@ -108,13 +154,12 @@ public class MainScene extends Scene {
 		private void showImage(PImage img) {
 			G.imageMode(G.CORNER);
 			G.image(img, 0, 0, E.WIN_W, E.WIN_H);
-			G.imageMode(G.CENTER);
 		}
 	}
 	
 	private static class BigStar extends DrawableObject {
 		private PImage starImage;
-		private float w, h;
+		private int w, h;
 		private Name name;
 		// only useful when debugging
 		private static final float SCALE = (float) E.WIN_W / 1920;
@@ -142,17 +187,32 @@ public class MainScene extends Scene {
 			super(G, SCALE * x, SCALE * y, z, 0, 0); // hidden by default
 			this.name = name;
 			starImage = loadImage("stars/" + imagePath);
-			this.w = SCALE * starImage.width;
-			this.h = SCALE * starImage.height;
+			this.w = (int) (SCALE * starImage.width);
+			this.h = (int) (SCALE * starImage.height);
+			starImage.resize(w, h);
 		}
 		
 		@Override
 		public void draw() {
 			if(alpha > 0) {
 				G.pushMatrix();
-				transform();
 				G.tint(E.color(255, alpha));
-				G.image(starImage, 0, 0, w, h);
+				// adjust alpha of image
+//				starImage.loadPixels();
+//				int[] pixels = starImage.pixels;
+//				int w = starImage.width, h = starImage.height;
+//				int i;
+//				for(int px = 0; px < w; px++)
+//					for(int py = 0; py < h; py++) {
+//						i = px + py * w;
+//						pixels[i] = G.color(pixels[i], alpha);
+//					}
+//				starImage.updatePixels();
+				//G.imageMode(G.CENTER);
+//				G.blendMode(G.BLEND);
+				G.image(starImage, x, y, w, h);
+//				G.tint(5);
+//				G.blend(starImage, 0, 0, w, h, (int)(x-w/2), (int)(y-h/2), w, h, G.BLEND);
 				G.tint(255);
 				G.popMatrix();
 			}
@@ -165,7 +225,7 @@ public class MainScene extends Scene {
 		
 		public Controller(MainScene parent) {
 			this.parent = parent;
-			BigStar[] stars = parent.stars;
+			BigStar[] stars = parent.sky.stars();
 			starControllers = new BigStarController[stars.length];
 			for(int si = 0; si < stars.length; si++) {
 				starControllers[si] = new BigStarController(stars[si], this);

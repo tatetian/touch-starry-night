@@ -48,7 +48,7 @@ public class TouchEventHandler implements Runnable{
 		byte[] touchInfo = new byte[4];
 		while(true) {
 			serial.write(128);
-			serial.readBytes(touchInfo);		
+			serial.readBytes(touchInfo);
 			char key = 0;
 			int i = 0, b = 0;
 			for(; i < 4; i++) {

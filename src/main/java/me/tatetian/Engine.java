@@ -2,12 +2,9 @@ package me.tatetian;
 
 import java.util.ArrayList;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
@@ -15,11 +12,9 @@ import ddf.minim.Minim;
 import me.tatetian.common.Drawable;
 import me.tatetian.effects.Animation;
 import me.tatetian.scene.MainScene;
-import me.tatetian.scene.NebulaScene;
 import me.tatetian.scene.Scene;
 
 import processing.core.PApplet;
-import processing.serial.*;
 
 public class Engine extends PApplet {	
 	public final float FOV  = PI / 3;
@@ -69,13 +64,15 @@ public class Engine extends PApplet {
 		TouchEventHandler.start(this);
 		
 		// play background music
-		Minim minim = new Minim(this);
-		AudioPlayer player = minim.loadFile(BASE_PATH + "sound/background.mp3");
-	  player.play();
-	  player.loop();
+//		Minim minim = new Minim(this);
+//		AudioPlayer player = minim.loadFile(BASE_PATH + "sound/background.mp3");
+//	  player.play();
+//	  player.loop();
 	}
 	
 	public void draw() {
+		
+		System.out.println(frameRate);
 		background(0);
 		lights();
 		currentScene.draw();

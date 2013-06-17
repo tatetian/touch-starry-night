@@ -63,5 +63,62 @@
       <scope>system</scope>
       <systemPath>${project.basedir}/lib/geomerative.jar</systemPath>
     </dependency>
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>serial</artifactId>
+      <version>1.5.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/serial.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>rxtx</artifactId>
+      <version>1.5.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/RXTXcomm.jar</systemPath>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>minim</artifactId>
+      <version>1.5.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/minim/minim.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>jl</artifactId>
+      <version>1.5.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/minim/jl1.0.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>jsminim</artifactId>
+      <version>1.5.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/minim/jsminim.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>mp3spi</artifactId>
+      <version>1.5.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/minim/mp3spi1.9.4.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>tritonus_aos</artifactId>
+      <version>1.5.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/minim/tritonus_aos.jar</systemPath>
+    </dependency>    
+    <dependency>
+      <groupId>org.processing</groupId>
+      <artifactId>tritonus_share</artifactId>
+      <version>1.5.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/minim/tritonus_share.jar</systemPath>
+    </dependency>
   </dependencies>
 </project>
