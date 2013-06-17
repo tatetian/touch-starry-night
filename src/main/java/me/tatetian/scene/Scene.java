@@ -3,8 +3,20 @@ package me.tatetian.scene;
 import me.tatetian.common.DrawableObject;
 
 public abstract class Scene extends DrawableObject {
-	public Scene() {
+	public static enum Name {
+		// main scene
+		MAIN,	
+		// nebula scenes
+		MOON, M51, CHE2, VENUS, HIP_13454, 
+		CHE3, LOU1, DA5, CHUAN3, TIAN1, HIP_10064,
+		HIP_10670, LOU3 
+	}
+	
+	protected Name name;
+	
+	public Scene(Name name) {
 		super(null, E.WIN_W / 2, E.WIN_H / 2, E.WIN_D, 0, 255);
+		this.name = name;
 		initGraphics();
 		setup();
 	}

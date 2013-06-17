@@ -13,10 +13,6 @@ public class Stars {
 		renderer.draw(stars);
 	}
 
-	public void animate(Animator animator) {
-		animator.update(stars);
-	}
-	
 	public Star[] stars() {
 		return stars;
 	}

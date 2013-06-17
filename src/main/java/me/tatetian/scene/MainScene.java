@@ -11,7 +11,6 @@ import me.tatetian.effects.TransparencyAnimation;
 import me.tatetian.effects.ZoomFadeSceneTransition;
 import processing.core.PGraphics;
 import processing.core.PImage;
-import me.tatetian.scene.NebulaScene.Name;
 
 public class MainScene extends Scene {
 	private Foreground foreground;
@@ -19,6 +18,10 @@ public class MainScene extends Scene {
 	private Controller controller;
 	
 	private LinkedList<Animation> animMemory;
+	
+	public MainScene() {
+		super(Name.MAIN);
+	}
 	
 	@Override
 	protected void setup() {

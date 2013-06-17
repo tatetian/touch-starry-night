@@ -4,17 +4,15 @@ import processing.core.PGraphics;
 import me.tatetian.common.DrawableObject;
 import me.tatetian.effects.Showable;
 
-public abstract class Nebula extends DrawableObject implements Showable {
+public class Nebula extends DrawableObject implements Showable {
 	private Stars[] stars;
 	private float normal_z;
 
-	public Nebula(PGraphics G, float x, float y, float z) {
+	public Nebula(PGraphics G, Stars[] stars, float x, float y, float z) {
 		super(G, x, y, z, 0, 255);
-		normal_z = z;
-		this.stars = generateStars();
+		this.normal_z = z;
+		this.stars = stars;
 	}
-	
-	public abstract Stars[] generateStars();
 	
 	public Stars[] stars() {
 		return stars;

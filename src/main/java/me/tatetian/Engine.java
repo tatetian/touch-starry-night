@@ -12,6 +12,7 @@ import ddf.minim.Minim;
 import me.tatetian.common.Drawable;
 import me.tatetian.effects.Animation;
 import me.tatetian.scene.MainScene;
+import me.tatetian.scene.NebulaScene;
 import me.tatetian.scene.Scene;
 
 import processing.core.PApplet;
@@ -58,8 +59,8 @@ public class Engine extends PApplet {
 
 		// init scenes
 		mainScene 		= new MainScene();
-		switchScene(mainScene);
-//		switchScene(NebulaScene.get(NebulaScene.Name.M51) );
+//		switchScene(mainScene);
+		switchScene(NebulaScene.get(NebulaScene.Name.HIP_10064) );
 		//		currentScene 	= new TextScene();		
 		TouchEventHandler.start(this);
 		
@@ -71,8 +72,7 @@ public class Engine extends PApplet {
 	}
 	
 	public void draw() {
-		
-		System.out.println(frameRate);
+//		System.out.println(frameRate);
 		background(0);
 		lights();
 		currentScene.draw();

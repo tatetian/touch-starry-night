@@ -32,7 +32,7 @@ public class SpriteStarsRenderer implements StarsRenderable {
 		G.shader(starShader, G.POINTS);
 		G.strokeWeight(weight);
 	  G.strokeCap(G.SQUARE);
-	  //E.stroke(starColor);
+	  G.stroke(starColor);
 	  for(Star star : stars)
 	  	G.point(star.x, star.y, star.z);
 	  G.resetShader();
