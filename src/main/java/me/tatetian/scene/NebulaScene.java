@@ -33,7 +33,7 @@ public class NebulaScene extends Scene {
 		if(scene_cache == null) 
 			scene_cache = new HashMap<Name, NebulaScene>();
 		NebulaScene scene = scene_cache.get(name);
-		if(scene == null) {
+		if(scene == null && NebulaScene.isSceneAvailable(name)) {
 			scene = new NebulaScene(name);
 			scene_cache.put(name, scene);
 		}
@@ -55,6 +55,12 @@ public class NebulaScene extends Scene {
 		
 	private Star2TextAnimationMaker stars2TextAnimator;
 
+	public static boolean isSceneAvailable(Name name) {
+		String sceneDir = E.BASE_PATH + "nebula_scenes/" + name + "/";
+		File dir = new File(sceneDir);
+		return dir.listFiles() != null;
+	}
+	
 	public NebulaScene(Name name) {
 		super(name);
 	}
@@ -84,7 +90,7 @@ public class NebulaScene extends Scene {
 		float quote_x = getFloat("quote.x", 0),
 					quote_y = getFloat("quote.y", 0);
 		int quote_size = getInt("quote.size", 120);
-		starText = new StarText(G, scenePath + "4.png", quote, quote_size,
+		starText = new StarText(G, scenePath + "flying_star.png", quote, quote_size,
 														E.WIN_W / 2 + quote_x, E.WIN_H / 2 + quote_y, E.WIN_D );
 		starText.hide(0);
 	}

@@ -52,9 +52,11 @@ public class MainScene extends Scene {
 	
 	@Override
 	protected void beforeDraw() {
-//		G.blendMode(G.BLEND);
 		super.beforeDraw();
-		sky.prepare();
+	
+		// this is a workaround
+		if(E.getCurrentScene() == this)
+			sky.prepare();
 	}
 	
 	@Override

@@ -59,8 +59,8 @@ public class Engine extends PApplet {
 
 		// init scenes
 		mainScene 		= new MainScene();
-//		switchScene(mainScene);
-		switchScene(NebulaScene.get(NebulaScene.Name.HIP_10064) );
+		switchScene(mainScene);
+//		switchScene(NebulaScene.get(NebulaScene.Name.HIP_10064) );
 		//		currentScene 	= new TextScene();		
 		TouchEventHandler.start(this);
 		
@@ -93,6 +93,10 @@ public class Engine extends PApplet {
 
 	public void keyPressed() {
 		controller.press(key);
+	}
+
+	public Scene getCurrentScene() {
+		return currentScene;
 	}
 	
 	public Scene getMainScene() {
