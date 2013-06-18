@@ -68,14 +68,14 @@
       <artifactId>serial</artifactId>
       <version>1.5.1</version>
       <scope>system</scope>
-      <systemPath>${project.basedir}/lib/serial.jar</systemPath>
+      <systemPath>${project.basedir}/lib/serial/serial.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.processing</groupId>
       <artifactId>rxtx</artifactId>
       <version>1.5.1</version>
       <scope>system</scope>
-      <systemPath>${project.basedir}/lib/RXTXcomm.jar</systemPath>
+      <systemPath>${project.basedir}/lib/serial/RXTXcomm.jar</systemPath>
     </dependency>
     
     <dependency>
@@ -121,4 +121,20 @@
       <systemPath>${project.basedir}/lib/minim/tritonus_share.jar</systemPath>
     </dependency>
   </dependencies>
+  
+  <build>
+    <plugins>
+       <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-jar-plugin</artifactId>
+         <configuration>
+           <archive>
+             <manifest>
+               <mainClass>me.tatetian.Engine</mainClass>
+             </manifest>
+           </archive>
+         </configuration>
+       </plugin>
+     </plugins>
+   </build>
 </project>

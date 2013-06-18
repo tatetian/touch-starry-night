@@ -1,5 +1,6 @@
 package me.tatetian;
 
+import java.awt.Frame;
 import java.util.ArrayList;
 
 import java.util.Iterator;
@@ -20,7 +21,7 @@ import processing.core.PApplet;
 public class Engine extends PApplet {	
 	public final float FOV  = PI / 3;
 	public int WIN_W  = 1440;	// width of window
-	public int WIN_H  = 810;		// height of window
+	public int WIN_H  = 810;	// height of window
 	public int WIN_D  = (int) (- WIN_H / 2 / tan(FOV / 2));	// standard depth of window
 	public static final String BASE_PATH  = "../../data/";
 	public final int FRAME_RATE  	= 25;
@@ -50,7 +51,8 @@ public class Engine extends PApplet {
 		
 		// init processing
 		size(WIN_W, WIN_H, P3D);
-		
+//		Frame frame = (Frame) (this.getParent().getParent());
+//		frame.setResizable(false);
 		background(0);
 //		smooth(4);
 		imageMode(CENTER);

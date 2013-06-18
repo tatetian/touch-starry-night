@@ -54,7 +54,7 @@ public class MainScene extends Scene {
 	protected void beforeDraw() {
 		super.beforeDraw();
 	
-		G.hint(G.ENABLE_DEPTH_MASK);
+		G.hint(G.ENABLE_DEPTH_TEST);
 		sky.prepare();
 	}
 	
