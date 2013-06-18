@@ -13,25 +13,35 @@ import processing.core.PGraphics;
 import processing.core.PImage;
 
 public class MainScene extends Scene {
-	private Foreground foreground;
+	private PImage trees, hills, mountain, grass;
 	private Sky sky;
 	private Controller controller;
 	
 	private LinkedList<Animation> animMemory;
 	
+	private float sky_scale, mountain_scale, hills_scale,
+								trees_scale, grass_scale;
+	
 	public MainScene() {
 		super(Name.MAIN);
+		
+		sky_scale = mountain_scale = hills_scale =
+		trees_scale = grass_scale = 1.0f;
 	}
 	
 	@Override
 	protected void setup() {
-		foreground = new Foreground(G);
-		sky 			 = new Sky(G);
+		sky 			 = new Sky();
+		
+		mountain = loadImage("mountain.png");
+		trees = loadImage("trees.png");
+		hills = loadImage("hills.png");
+		grass = loadImage("grass.png");
 		
 		controller = new Controller(this);
 		animMemory = new LinkedList<Animation>();
 		// TODO: init animations
-		// ...
+		addAnimation(new BackForthAnimation(this));
 	}
 
 	@Override
@@ -61,8 +71,12 @@ public class MainScene extends Scene {
 	@Override
 	protected void drawGraphics() {
 		G.background(120);
-		sky.draw();
-		foreground.draw();		
+		
+		showImage(sky.image(), sky_scale);
+		showImage(mountain, mountain_scale);
+		showImage(hills, hills_scale);
+		showImage(trees, trees_scale);
+		showImage(grass,grass_scale);
 	}
 	
 	@Override
@@ -83,18 +97,21 @@ public class MainScene extends Scene {
 		}
 	}
 	
+	private void showImage(PImage img, float scale) {
+		G.imageMode(G.CENTER);
+		G.image(img, E.WIN_W / 2, E.WIN_H / 2, scale * E.WIN_W, scale * E.WIN_H);
+	}
+	
 	private static PImage loadImage(String fileName) {
 		return E.loadImage(E.BASE_PATH + "main_scene/" + fileName);
 	}
 	
-	private static class Sky extends Drawable {
+	private static class Sky {
 		private PImage skyImg;
 		private BigStar[] stars;
 		private PGraphics sky;
 		
-		public Sky(PGraphics G) {
-			super(G);
-				
+		public Sky() {
 			this.skyImg	= loadImage("sky.png");
 			this.sky		= E.createGraphics(E.WIN_W, E.WIN_H, E.P2D);
 			this.stars  = BigStar.getStars(sky);
@@ -117,41 +134,11 @@ public class MainScene extends Scene {
 			sky.endDraw();
 		}
 		
-		@Override
-		public void draw() {
-			G.imageMode(G.CORNER);
-			G.image(sky, 0, 0, E.WIN_W, E.WIN_H);
-		}
+		public PImage image() {
+			return sky;
+		} 
 		
 		public BigStar[] stars() { return stars; }
-	}
-	
-	private static class Foreground extends Drawable {
-		private PImage trees, hills, mountain, grass;
-		
-		public Foreground(PGraphics G) {
-			super(G);
-			
-			mountain = loadImage("mountain.png");
-			trees = loadImage("trees.png");
-			hills = loadImage("hills.png");
-			grass = loadImage("grass.png");
-		}
-		
-		@Override
-		public void draw() {		
-			G.pushMatrix();
-			showImage(mountain);
-			showImage(hills);
-			showImage(trees);
-			showImage(grass);
-			G.popMatrix();
-		}
-		
-		private void showImage(PImage img) {
-			G.imageMode(G.CORNER);
-			G.image(img, 0, 0, E.WIN_W, E.WIN_H);
-		}
 	}
 	
 	private static class BigStar extends DrawableObject {
@@ -347,6 +334,43 @@ public class MainScene extends Scene {
 				controller.visible();
 			else // fade out
 				controller.hidden();
+		}
+	}
+	
+	private static class BackForthAnimation extends Animation {
+		private static final float SKY_SCALE_SPEED 			= 0.2f;
+		private static final float MOUNTAIN_SCALE_SPEED = 0.4f;
+		private static final float HILLS_SCALE_SPEED 		= 0.6f;
+		private static final float TREES_SCALE_SPEED 		= 0.8f;
+		private static final float GRASS_SCALE_SPEED 		= 1;
+		
+		
+		private static final int 	 TIME_PERIOD = 30 ; // 30s
+		private static final float MAX_SCALE 	= 0.2f;
+		private static final int 	 MAX_STEPS  = TIME_PERIOD * E.FRAME_RATE;		
+		private static final float BASE_SPEED = MAX_SCALE / MAX_STEPS; 
+		
+		private int steps;
+		private MainScene parent;
+		private float base_speed;
+		
+		public BackForthAnimation(MainScene parent) {
+			super(-1);
+			this.parent = parent;
+			this.steps  = 0;
+			this.base_speed = BASE_SPEED;
+		}
+
+		@Override
+		public void update() {
+			parent.sky_scale += SKY_SCALE_SPEED * base_speed;
+			parent.mountain_scale += MOUNTAIN_SCALE_SPEED  * base_speed;
+			parent.hills_scale += HILLS_SCALE_SPEED * base_speed;
+			parent.trees_scale += TREES_SCALE_SPEED * base_speed;
+			parent.grass_scale += GRASS_SCALE_SPEED * base_speed;
+			
+			steps ++;			
+			if(steps == MAX_STEPS) { steps = 0; base_speed *= -1; }
 		}
 	}
 }
