@@ -85,6 +85,7 @@ public class NebulaScene extends Scene {
 		initText();
 		// init moving stars
 		flyingStars = generateFlyingStars(500, 1.5f, 10 * E.WIN_D, - E.WIN_D); 
+		flyingStars.save();
 	}
 		
 	private void initText() {
@@ -98,7 +99,10 @@ public class NebulaScene extends Scene {
 	}
 
 	@Override
-	public void show() {		
+	public void show() {
+		textShown = false;
+		
+		background.reset();
 		background.show(4000);
 		background.rotate(0.0004f, -1);
 		
@@ -106,6 +110,7 @@ public class NebulaScene extends Scene {
 		nebula.show(4000);
 		nebulaAnim = nebula.rotate(0.0004f, -1);
 				
+		flyingStars.reset();
 		flyingAnim = new StarFlyingAnimation(flyingStars, 10 * E.WIN_D, - 5 * E.WIN_D, 1);
 		addAnimation(flyingAnim);
 		

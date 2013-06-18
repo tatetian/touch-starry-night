@@ -12,6 +12,8 @@ public abstract class DrawableObject extends Drawable implements Transparentible
 	protected int alpha;
 	private int delay_time;
 
+	private float ox, oy, oz, oangle; int oalpha;
+	
 	protected int MIN_ALPHA = 0, MAX_ALPHA = 255;
 	
 	public DrawableObject(PGraphics G) {
@@ -26,10 +28,16 @@ public abstract class DrawableObject extends Drawable implements Transparentible
 		this.angle = angle;
 		this.alpha = alpha;
 		this.delay_time = 0;
+		
+		save();
+	}
+	
+	public void save() {		
+		ox = x; oy = y; oz = z; oangle = angle; oalpha = alpha;
 	}
 	
 	public void reset() {
-		
+		x = ox; y = oy; z = oz; angle = oangle; alpha = oalpha;
 	}
 	
 	public void delay(int millis) {

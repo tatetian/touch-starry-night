@@ -12,6 +12,15 @@ public class Nebula extends DrawableObject implements Showable {
 		super(G, x, y, z, 0, 255);
 		this.normal_z = z;
 		this.stars = stars;
+		for(Stars ss : stars)
+			ss.save();
+	}
+	
+	@Override
+	public void reset() {
+		super.reset();
+		for(Stars ss : stars)
+			ss.reset();
 	}
 	
 	public Stars[] stars() {

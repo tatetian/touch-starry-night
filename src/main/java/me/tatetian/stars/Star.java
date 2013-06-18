@@ -17,6 +17,10 @@ public class Star implements Comparable<Star> {
 		this.z = z;
 	}
 	
+	public void set(Star star) {
+		x = star.x; y = star.y; z = star.z;
+	}
+	
 	@Override
 	public String toString() {
 		return "<" + x + ", " + y + ", " + z  + ">";
