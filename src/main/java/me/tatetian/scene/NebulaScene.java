@@ -39,7 +39,16 @@ public class NebulaScene extends Scene {
 			scene_cache.put(name, scene);
 		}
 		return scene;
-	}	
+	}
+	
+	private static final char[] KEYS = new char[] {
+		'0', '1', '2', '3', '4',
+		'5', '6', '7', '8', '9',
+		'a', 'b', 'c'
+	} ;
+	public static char getKey(Name name) {
+		return KEYS[name.ordinal()-1];
+	}
 	
 	private Properties properties;
 	
@@ -54,6 +63,8 @@ public class NebulaScene extends Scene {
 	
 	private Stars flyingStars;
 	private Animation flyingAnim;
+
+	private char sceneKey;
 	
 	private Stars hiddenStars;
 		
@@ -67,6 +78,7 @@ public class NebulaScene extends Scene {
 	
 	public NebulaScene(Name name) {
 		super(name);
+		sceneKey = getKey(name);
 	}
 	
 	@Override
@@ -200,6 +212,9 @@ public class NebulaScene extends Scene {
 		// if press 'm', then go back to main scene
 		if(key == 'm')
 			E.switchScene(E.getMainScene());
+		else if(key == sceneKey) {
+			click(0, 0);
+		}
 	}
 	
 	@Override
@@ -268,36 +283,6 @@ public class NebulaScene extends Scene {
 					StarsGenerator.generate(numStars, E.WIN_W, E.WIN_H, xy_scale, min_z, max_z),
 					new SpriteStarsRenderer(G, baseDir + starImgFiles.get(si), star_size) );	
 			}
-			
-//			Stars[] stars = new Stars[7];
-//			stars[0] = new Stars(
-//					StarsGenerator.generate(5, E.width, E.height, 1.5f, -200, 0), 
-//					new SpriteStarsRenderer(G, "small_stars/1.png", 50) );
-//			stars[1] = new Stars(
-//					StarsGenerator.generate(10, E.width , E.height, 1.5f, -200, 0), 
-//					new SpriteStarsRenderer(G, "small_stars/2.png", 50) );
-//			stars[2] = new Stars(
-//					StarsGenerator.generate(2, E.width, E.height, 1.5f, 0, 200), 
-//					new SpriteStarsRenderer(G, "small_stars/3.png", 50) );
-//			stars[3] = new Stars(
-//					StarsGenerator.generate(25, E.width, E.height, 1.75f, -100, 0), 
-//					new SpriteStarsRenderer(G, "small_stars/4.png", 50) );
-//			stars[4] = new Stars(
-//					StarsGenerator.generate(10, E.width, E.height, 1.5f, -200, -100), 
-//					new SpriteStarsRenderer(G, "small_stars/5.png", 50) );
-//			stars[5] = new Stars(
-//					StarsGenerator.generate(6, E.width, E.height, 1.5f, -1200, -200), 
-//					new SpriteStarsRenderer(G, "small_stars/6.png", 20) );
-//			stars[6] = new Stars(
-//					StarsGenerator.generate(10, E.width, E.height, 2f, -200, 0), 
-//						new SpriteStarsRenderer(G, "small_stars/7.png", 50) );
-			
-//
-//			Stars[] stars = new Stars[1];
-//			stars[0] = new Stars(
-//					new Star[] { new Star(0, 0, 0) },
-//					new SpriteStarsRenderer(E, "small_stars/1.png", 100) );
-//			
 			return stars;
 		}
 
