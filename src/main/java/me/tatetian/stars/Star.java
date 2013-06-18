@@ -1,6 +1,6 @@
 package me.tatetian.stars;
 
-public class Star implements Comparable<Star> {
+public class Star {
 	public float x, y, z;
 	
 	public Star() {
