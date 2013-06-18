@@ -81,6 +81,9 @@ public class MainScene extends Scene {
 	
 	@Override
 	public void press(char key) {
+		// when transition, reject any key event
+		if( fromScene != null ) return;
+		
 		controller.press(key);
 	}
 

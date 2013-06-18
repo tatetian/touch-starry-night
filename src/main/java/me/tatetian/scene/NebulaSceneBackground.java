@@ -10,26 +10,28 @@ public class NebulaSceneBackground extends DrawableObject
 	private PImage background;
 	private float normal_z;
 	
-	public NebulaSceneBackground(PGraphics G, String imgPath, float z) {
-		this(G, imgPath, E.WIN_W / 2, E.WIN_H / 2, z);
+	public NebulaSceneBackground(PGraphics G, float x, float y, String imgPath, float z) {
+		this(G, imgPath, x, y, z);
 	}
 	public NebulaSceneBackground(PGraphics G, String imgPath, float x, float y, float z) {
 		super(G, x, y, z, 0, 255);
 		this.background = E.loadImage(E.BASE_PATH + imgPath);
 		this.normal_z = z;
+//		z = 1.2f * z;
+		this.MIN_ALPHA = 100;
 	}
 	
 	public void show(int millis) {
-		alpha = 0;
-		z = 1.2f * normal_z;
-		move(z, normal_z, millis);
+		alpha = MIN_ALPHA;
+//		z = 1.2f * normal_z;
+//		move(z, normal_z, millis);
 		fadeIn(millis);
 	}
 
 	public void hide(int millis) {
-		alpha = 255;
-		//z = normal_z;
-		//move(normal_z, - E.WINDOW_DEPTH, millis);
+		alpha = MAX_ALPHA;
+//		z = 1.2f * normal_z;
+//		move(normal_z, z, millis);
 		fadeOut(millis);
 	}
 	

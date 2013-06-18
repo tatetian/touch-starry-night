@@ -57,7 +57,9 @@ public class Engine extends PApplet {
 		
 		// init processing
 		size(WIN_W, WIN_H, P3D);
-		frame.setResizable(false);
+		// frame is null on Windows
+		if(frame != null)
+			frame.setResizable(false);
 		
 		background(0);
 //		smooth(4);

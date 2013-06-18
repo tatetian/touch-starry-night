@@ -127,7 +127,7 @@ public class Star2TextAnimationMaker {
 				ms.z = q * os.z + p * ts.z ;
 			}
 //			Nebula nb = parent.nebula;
-////			nb.angle(p * parent.nebula_angle);
+//			nb.angle(p * parent.nebula_angle);
 		}
 	}
 }

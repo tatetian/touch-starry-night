@@ -8,10 +8,14 @@ public class Nebula extends DrawableObject implements Showable {
 	private Stars[] stars;
 	private float normal_z;
 
+	private float rot_x, rot_y;
+	
 	public Nebula(PGraphics G, Stars[] stars, float x, float y, float z) {
 		super(G, x, y, z, 0, 255);
 		this.normal_z = z;
 		this.stars = stars;
+//		this.rot_x = this.rot_y = 0;
+		
 		for(Stars ss : stars)
 			ss.save();
 	}
@@ -27,6 +31,11 @@ public class Nebula extends DrawableObject implements Showable {
 		return stars;
 	}
 	
+//	public void setRotationCenter(float rot_x, float rot_y) {
+//		this.rot_x = rot_x;
+//		this.rot_y = rot_y;
+//	}
+	
 	@Override
 	public void draw() {
 		G.pushMatrix();
@@ -37,6 +46,13 @@ public class Nebula extends DrawableObject implements Showable {
 		}
 		G.popMatrix();
 	}
+	
+//	@Override
+//	public void transform() {
+//		G.translate(x + rot_x, y + rot_y, z);	
+//		G.rotateZ(angle);
+//		G.translate(- rot_x, - rot_y);
+//	}
 	
 	public void show(int millis) {
 		alpha = 0;

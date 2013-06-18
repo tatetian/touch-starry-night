@@ -76,7 +76,10 @@ public class NebulaScene extends Scene {
   
 		loadProperties();
 		// init background
-		background = new NebulaSceneBackground(G, scenePath + "background.png", E.WIN_D / 3);
+		float bg_dx = getFloat("background.dx", 0),
+					bg_dy = getFloat("background.dy", 0);
+		background = new NebulaSceneBackground(G, E.WIN_W / 2 + bg_dx, E.WIN_H / 2+ bg_dy, 
+																						scenePath + "background.png", E.WIN_D / 3 );
 		// init nebula
 		int numNebulaStars = getInt("nebula.stars.total", 60);
 		Stars[] stars = generateStars(numNebulaStars);
@@ -108,6 +111,9 @@ public class NebulaScene extends Scene {
 		
 		nebula.reset();		
 		nebula.show(4000);
+//		float rot_x = getFloat("nebula.animation.x", 0),
+//					rot_y = getFloat("nebula.animation.y", 0);
+//		nebula.setRotationCenter(rot_x, rot_y);
 		nebulaAnim = nebula.rotate(0.0004f, -1);
 				
 		flyingStars.reset();
@@ -188,6 +194,9 @@ public class NebulaScene extends Scene {
 	
 	@Override
 	public void press(char key) {
+		// while in transition, reject any key event
+		if(fromScene != null) return;
+		
 		// if press 'm', then go back to main scene
 		if(key == 'm')
 			E.switchScene(E.getMainScene());
@@ -217,12 +226,11 @@ public class NebulaScene extends Scene {
 				E.addAnimation(anim);
 	
 //				starText.hide(1000);
-				background.delay(1000);
+//				background.delay(1000);
 				background.show(2000);
 				
 				if(nebulaAnim != null) nebulaAnim.resume();
 				if(flyingAnim != null) flyingAnim.resume();
-				
 				
 				textShown = false;
 			}
