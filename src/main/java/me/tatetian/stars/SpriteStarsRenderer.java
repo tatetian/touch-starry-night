@@ -20,7 +20,7 @@ public class SpriteStarsRenderer implements StarsRenderable {
 		this.starShader = G.loadShader(Engine.BASE_PATH + "spritefrag.glsl", 
 														   		 Engine.BASE_PATH + "spritevert.glsl");
 	  this.starShader.set("weight", weight);
-	  PImage star = Drawable.E.loadImage(Engine.BASE_PATH + starImgPath);
+	  PImage star = Drawable.E.loadImage(starImgPath);
 	  this.starShader.set("sprite", star);  
 	}
 	

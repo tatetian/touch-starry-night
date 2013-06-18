@@ -20,10 +20,10 @@ import processing.core.PApplet;
 
 public class Engine extends PApplet {	
 	public final float FOV  = PI / 3;
-	public int WIN_W  = 1440;	// width of window
-	public int WIN_H  = 810;	// height of window
-	public int WIN_D  = (int) (- WIN_H / 2 / tan(FOV / 2));	// standard depth of window
-	public static final String BASE_PATH  = "../../data/";
+	public final int WIN_W  = 1440;	// width of window
+	public final int WIN_H  = 900;	// height of window
+	public final int WIN_D  = (int) (- WIN_H / 2 / tan(FOV / 2));	// standard depth of window
+	public static final String BASE_PATH  = "data/";
 	public final int FRAME_RATE  	= 25;
 	
 	private Controller controller;
@@ -36,23 +36,29 @@ public class Engine extends PApplet {
 	
 	private char pressKey = 0;
 	
+	public static void main(String[] args) {
+    PApplet.main("me.tatetian.Engine",
+    		// the following parameters are not working. But why?
+    		new String[] { "--full-screen", "--hide-stop", 
+    									 "--bgcolor=#000000", "--display=1", 
+    									 "--location=0,0" } );
+  }
+	
+	// force the window to be full screen
 	@Override
 	public boolean sketchFullScreen() {
 		return true;
 	}
 	
+	@Override
 	public void setup() {	
-//		WIN_W = displayWidth;
-//		WIN_H = displayHeight;
-//		WIN_D  = (int) (- WIN_H / 2 / tan(FOV / 2));
-//		
 		Drawable.setEngine(this);
 		Animation.setEngine(this);
 		
 		// init processing
 		size(WIN_W, WIN_H, P3D);
-//		Frame frame = (Frame) (this.getParent().getParent());
-//		frame.setResizable(false);
+		frame.setResizable(false);
+		
 		background(0);
 //		smooth(4);
 		imageMode(CENTER);
@@ -85,6 +91,7 @@ public class Engine extends PApplet {
 //	  player.loop();
 	}
 	
+	@Override
 	public void draw() {
 		perspective(FOV, (float)WIN_W/WIN_H, 1, WIN_D *10); 
 	  camera(WIN_W/2, WIN_H/2, 1, WIN_W/2, WIN_H/2, 0, 0, 1, 0); 
