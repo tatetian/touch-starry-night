@@ -25,9 +25,4 @@ public class Star implements Comparable<Star> {
 	public String toString() {
 		return "<" + x + ", " + y + ", " + z  + ">";
 	}
-	
-	public int compareTo(Star o) {
-		return x < o.x && y < o.y ? -1 : 
-					 x > o.x && y > o.y ? 1 : 0;
-	}
 }

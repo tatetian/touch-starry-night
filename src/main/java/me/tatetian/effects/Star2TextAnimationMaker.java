@@ -36,12 +36,9 @@ public class Star2TextAnimationMaker {
 			System.arraycopy(s, 0, movingStars, numMovingStars, s.length);
 			numMovingStars += s.length;
 		}
-		Arrays.sort(movingStars);
 		// init target stars
 		Star[] textStars = text.stars();
 		shuffle(textStars);
-		Arrays.sort(textStars);
-		System.out.println(numMovingStars + " vs " + textStars.length);
 		assert(numMovingStars == textStars.length);
 		targetStars = new Star[movingStars.length];
 		for(int ms_i = 0; ms_i < movingStars.length; ms_i ++) {
