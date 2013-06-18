@@ -190,6 +190,8 @@ public class Engine extends PApplet {
 		
 		public void press(char key) {
 			if(key > 0) {
+				// CHE2 == CHE3
+				if(key == '5') key = '2';
 				engine.currentScene.press(key);
 			}
 		}

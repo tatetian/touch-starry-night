@@ -33,8 +33,13 @@ public class NebulaScene extends Scene {
 	public static NebulaScene get(Name name) {
 		if(scene_cache == null) 
 			scene_cache = new HashMap<Name, NebulaScene>();
+		
+		// special rule to combine CHE2 and CHE3
+		if(name == Name.CHE3) name = Name.CHE2;
+		
 		NebulaScene scene = scene_cache.get(name);
 		if(scene == null && NebulaScene.isSceneAvailable(name)) {
+			
 			scene = new NebulaScene(name);
 			scene_cache.put(name, scene);
 		}
@@ -47,6 +52,8 @@ public class NebulaScene extends Scene {
 		'a', 'b', 'c'
 	} ;
 	public static char getKey(Name name) {
+		if(name == Name.CHE3) name = Name.CHE2;
+		
 		return KEYS[name.ordinal()-1];
 	}
 	
@@ -90,8 +97,9 @@ public class NebulaScene extends Scene {
 		// init background
 		float bg_dx = getFloat("background.dx", 0),
 					bg_dy = getFloat("background.dy", 0);
+		float bg_z  = getFloat("background.z", 3);
 		background = new NebulaSceneBackground(G, E.WIN_W / 2 + bg_dx, E.WIN_H / 2+ bg_dy, 
-																						scenePath + "background.png", E.WIN_D / 3 );
+																						scenePath + "background.png", E.WIN_D / bg_z );
 		// init nebula
 		int numNebulaStars = getInt("nebula.stars.total", 60);
 		Stars[] stars = generateStars(numNebulaStars);
@@ -99,7 +107,8 @@ public class NebulaScene extends Scene {
 		// init text
 		initText();
 		// init moving stars
-		flyingStars = generateFlyingStars(500, 1.5f, 10 * E.WIN_D, - E.WIN_D); 
+		int numFlyingStars = getInt("flying.stars.total", 500);
+		flyingStars = generateFlyingStars(numFlyingStars, 1.5f, 10 * E.WIN_D, - E.WIN_D); 
 		flyingStars.save();
 	}
 		
@@ -119,7 +128,18 @@ public class NebulaScene extends Scene {
 		
 		background.reset();
 		background.show(4000);
-		background.rotate(0.0004f, -1);
+		
+		String bgAnimType = getString("background.anim.type", "rotation");
+		if(bgAnimType.equals("loop-fly")) {
+			float from_x = getFloat("background.anim.from_x", -800),
+						from_y = getFloat("background.anim.from_y", -300),
+						to_x 	 = getFloat("background.anim.to_x", 800),
+						to_y	 = getFloat("background.anim.to_y", 300);
+			int time	 = getInt("background.anim.time", 100000);
+			background.fly(from_x, from_y, to_x, to_y, time);
+		}
+		else
+			background.rotate(0.0004f, -1);
 		
 		nebula.reset();		
 		nebula.show(4000);
@@ -303,7 +323,12 @@ public class NebulaScene extends Scene {
 	}	
 		
 	private String getString(String key) {
-		return properties.getProperty(key);
+		return getString(key, null);
+	}
+	
+	private String getString(String key, String defaultValue) {
+		String strVal = properties.getProperty(key);
+		return strVal != null ? strVal : defaultValue;
 	}
 	
 	private int getInt(String key, int defaultVal) {
