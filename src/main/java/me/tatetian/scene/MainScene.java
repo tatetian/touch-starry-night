@@ -54,22 +54,15 @@ public class MainScene extends Scene {
 	protected void beforeDraw() {
 		super.beforeDraw();
 	
-		// this is a workaround
-		if(E.getCurrentScene() == this)
-			sky.prepare();
+		G.hint(G.ENABLE_DEPTH_MASK);
+		sky.prepare();
 	}
 	
 	@Override
 	protected void drawGraphics() {
-//		G.blendMode(G.BLEND);
-//		G.hint(G.ENABLE_DEPTH_TEST);
 		G.background(120);
 		sky.draw();
 		foreground.draw();		
-//		G.blendMode(G.ADD);
-//		G.hint(G.DISABLE_DEPTH_TEST);
-//		for(BigStar star : stars) 
-//			star.draw();
 	}
 	
 	@Override
@@ -114,7 +107,6 @@ public class MainScene extends Scene {
 		public void prepare() {
 			sky.beginDraw();
 			sky.blendMode(sky.BLEND);
-			sky.smooth(4);
 			sky.background(0);
 			sky.imageMode(sky.CORNER);
 			sky.image(skyImg, 0, 0, sky.width, sky.height);
@@ -200,8 +192,8 @@ public class MainScene extends Scene {
 		@Override
 		public void draw() {
 			if(alpha > 0) {
-				G.pushMatrix();
-				G.tint(E.color(255, alpha));
+//				G.pushMatrix();
+				G.tint(G.color(255, alpha));
 				// adjust alpha of image
 //				starImage.loadPixels();
 //				int[] pixels = starImage.pixels;
@@ -219,7 +211,7 @@ public class MainScene extends Scene {
 //				G.tint(5);
 //				G.blend(starImage, 0, 0, w, h, (int)(x-w/2), (int)(y-h/2), w, h, G.BLEND);
 				G.tint(255);
-				G.popMatrix();
+//				G.popMatrix();
 			}
 		}
 	}
@@ -253,9 +245,9 @@ public class MainScene extends Scene {
 		private BigStar star;
 		private State state = State.HIDDEN;
 		
-		private static final int FADE_IN_TIME = 2000;
+		private static final int FADE_IN_TIME = 1000;
 		private static final int AUTO_FADE_OUT_TIME = 5000;
-		private static final int FADE_OUT_TIME = 4000;
+		private static final int FADE_OUT_TIME = 3000;
 		
 		private BigStarWaitAnimation waitBeforeFadeOut;
 		private BigStarFadingAnimation fadeAnim;

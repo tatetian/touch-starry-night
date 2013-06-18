@@ -37,6 +37,10 @@ public abstract class Scene extends DrawableObject {
 	
 	@Override
 	public final void draw() {
+//		final int w = E.WIN_W, h = E.WIN_H, d = E.WIN_D;
+//		G.perspective(E.FOV, (float)w/h, 1, 10 * d); 
+//	  G.camera(w/2, h/2, 1, w/2, h/2, 0, 0, 1, 0);
+
 		beforeDraw();
 		
 		G.beginDraw();
@@ -60,7 +64,6 @@ public abstract class Scene extends DrawableObject {
 	
 	protected void beforeDraw() {
 	  G.imageMode(G.CENTER);
-	  G.smooth(4);
 		G.lights();
 	}
 	

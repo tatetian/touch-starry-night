@@ -23,7 +23,7 @@ public class StarText extends DrawableObject implements Showable, Transparentibl
 									String starImgPath, 
 									String text, int textSize, 
 									float x, float y, float z) {
-		super(G, x, y, z, 0, 255);
+		super(G, E.WIN_W / 2, E.WIN_H / 2, z, 0, 255);
 		MAX_ALPHA = 255;
 		// prepare to process text
 	  RG.init(E);	  
@@ -31,16 +31,16 @@ public class StarText extends DrawableObject implements Showable, Transparentibl
 	  font.setAlign(RFont.CENTER);
 	  font.setSize(textSize);	  
   	RG.setPolygonizer(RG.UNIFORMLENGTH);
-  	RG.setPolygonizerLength(textSize / 12);
+  	RG.setPolygonizerLength(15);
   	float line_height = font.getLineSpacing();
   	
 	  // init stars
 	  List<Star> starList = new ArrayList<Star>();
 	  String[] lines = text.split("\n");
-	  float delta_y = 0;
+	  float delta_y = y;
 	  for(String line : lines) {
 	  	RGroup grp = font.toGroup(line);
-	  	grp.translate(0, delta_y);
+	  	grp.translate(x, delta_y);
 	  	RPoint[] points = grp.getPoints();
 	  	for(RPoint p : points) 
 	  		starList.add(new Star(p.x, p.y, 0));

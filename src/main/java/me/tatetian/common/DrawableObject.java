@@ -79,6 +79,8 @@ public abstract class DrawableObject extends Drawable implements Transparentible
 		this.z = z;
 	}
 	
+	public float x() { return x; }
+	public float y() { return y; }
 	public float z() { return z; }
 	
 	public void alpha(int alpha) {

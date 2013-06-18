@@ -20,6 +20,7 @@ import me.tatetian.effects.StarFlyingAnimation;
 import me.tatetian.effects.ZoomFadeSceneTransition;
 import me.tatetian.stars.Nebula;
 import me.tatetian.stars.SpriteStarsRenderer;
+import me.tatetian.stars.Star;
 import me.tatetian.stars.StarText;
 import me.tatetian.stars.Stars;
 import me.tatetian.stars.StarsGenerator;
@@ -48,10 +49,13 @@ public class NebulaScene extends Scene {
 	private String scenePath;
 	
 	private int lastClickTime = -1;
-	private Animation nebulaAnim;
 	private boolean textShown = false;
+	private Animation nebulaAnim;
 	
-	private Stars[] flyingStars;
+	private Stars flyingStars;
+	private Animation flyingAnim;
+	
+	private Stars hiddenStars;
 		
 	private Star2TextAnimationMaker stars2TextAnimator;
 
@@ -80,18 +84,16 @@ public class NebulaScene extends Scene {
 		// init text
 		initText();
 		// init moving stars
-		flyingStars = new Stars[] { new Stars(
-							StarsGenerator.generate(500, E.width, E.height, 1.5f, 10 * E.WIN_D, - E.WIN_D), 
-							new SpriteStarsRenderer(G, E.BASE_PATH + scenePath + "flying_star.png", 60) ) };
+		flyingStars = generateFlyingStars(500, 1.5f, 10 * E.WIN_D, - E.WIN_D); 
 	}
-	
+		
 	private void initText() {
 		String quote = properties.getProperty("quote");
 		float quote_x = getFloat("quote.x", 0),
 					quote_y = getFloat("quote.y", 0);
-		int quote_size = getInt("quote.size", 120);
+		int quote_size = getInt("quote.size", 140);
 		starText = new StarText(G, scenePath + "flying_star.png", quote, quote_size,
-														E.WIN_W / 2 + quote_x, E.WIN_H / 2 + quote_y, E.WIN_D );
+														quote_x, quote_y, E.WIN_D );
 		starText.hide(0);
 	}
 
@@ -99,30 +101,59 @@ public class NebulaScene extends Scene {
 	public void show() {		
 		background.show(4000);
 		background.rotate(0.0004f, -1);
+		
 		nebula.reset();		
 		nebula.show(4000);
 		nebulaAnim = nebula.rotate(0.0004f, -1);
-		starText.reset();		
-		stars2TextAnimator = new Star2TextAnimationMaker(starText, nebula.stars(), nebula);
+				
+		flyingAnim = new StarFlyingAnimation(flyingStars, 10 * E.WIN_D, - 5 * E.WIN_D, 1);
+		addAnimation(flyingAnim);
+		
+		initStar2TextAnimation();
 		
 		lastClickTime = E.millis();
+	}
+	
+	private void initStar2TextAnimation() {
+		Star[] textStars  	= starText.stars();
+		Stars[] nebulaStars = nebula.stars();
+		Star[] flyingStars	= this.flyingStars.stars();
+
+		int numAllStars			= textStars.length;
+		int numNebulaStars	= countStars(nebulaStars);
+		int numFlyingStars	= flyingStars.length;
 		
-		StarFlyingAnimation a = new StarFlyingAnimation(flyingStars, 
-																  10 * E.WIN_D, - 5 * E.WIN_D, 1);
-		addAnimation(a);
+		int numHiddenStars  = Math.max(numAllStars - numNebulaStars - numFlyingStars, 0);
+		hiddenStars	= generateFlyingStars(numHiddenStars, 2.5f, 11 * E.WIN_D, 10 * E.WIN_D);
+		
+		Stars[] allStars = new Stars[nebulaStars.length + 2];
+		System.arraycopy(nebulaStars, 0, allStars, 0, nebulaStars.length);
+		allStars[allStars.length - 2] = this.flyingStars;
+		allStars[allStars.length - 1] = this.hiddenStars;
+		stars2TextAnimator = new Star2TextAnimationMaker(starText, allStars, nebula);
+	}
+	
+	private int countStars(Stars[] stars) {
+		int count = 0;
+		for(Stars ss: stars) 
+			count += ss.stars().length;
+		return count;
 	}
 	
 	@Override
 	protected void drawGraphics() {
 		G.background(0);
+		G.blendMode(G.ADD);
 		// draw nebula background
 		background.draw();
 		// draw nebula stars
 		nebula.draw();
 		// draw flying stars
-		for(Stars ss : flyingStars) {
-			ss.draw();
-		}
+		G.pushMatrix();
+		G.translate(E.WIN_W /2,  E.WIN_H / 2, E.WIN_D);
+		if(flyingStars != null) flyingStars.draw();
+		if(hiddenStars != null) hiddenStars.draw();
+		G.popMatrix();
 		// draw text
 		starText.draw();
 	}
@@ -130,7 +161,7 @@ public class NebulaScene extends Scene {
 	@Override
 	protected void beforeDraw() {
 		G.imageMode(G.CENTER);
-		G.blendMode(G.BLEND);
+		G.blendMode(G.ADD);
 		G.hint(G.DISABLE_DEPTH_TEST);
 		G.lights();
 	}
@@ -159,13 +190,14 @@ public class NebulaScene extends Scene {
 	
 	@Override
 	public void click(int clientX, int clientY) {
-		if(E.millis() - lastClickTime > 4000) {
+		if(E.millis() - lastClickTime > 3000) {
 			lastClickTime = E.millis();
 			if(!textShown) {
 				if(nebulaAnim != null) nebulaAnim.pause();
+				if(flyingAnim != null) flyingAnim.pause();
 				background.hide(2000);
-				starText.delay(1000);
-				starText.show(1500);
+//				starText.delay(500);
+//				starText.show(1500);
 			//	starText.show(0);
 				// Moving star to form the shape of text
 				Stars2TextAnimation anim = stars2TextAnimator.toText(2000);
@@ -179,10 +211,13 @@ public class NebulaScene extends Scene {
 				Stars2TextAnimation anim = stars2TextAnimator.backStars(2000);
 				E.addAnimation(anim);
 	
-				starText.hide(1000);
-				background.delay(500);
-				background.show(1500);
-				nebulaAnim.resume();
+//				starText.hide(1000);
+				background.delay(1000);
+				background.show(2000);
+				
+				if(nebulaAnim != null) nebulaAnim.resume();
+				if(flyingAnim != null) flyingAnim.resume();
+				
 				
 				textShown = false;
 			}
@@ -253,6 +288,11 @@ public class NebulaScene extends Scene {
 			return stars;
 		}
 
+	private Stars generateFlyingStars(int numStars, float scale_xy, float min_z, float max_z) {
+		return new Stars( 
+							StarsGenerator.generate(numStars, E.width, E.height, scale_xy, min_z, max_z), 
+							new SpriteStarsRenderer(G, E.BASE_PATH + scenePath + "flying_star.png", 60) );
+	}
 		
 	private void loadProperties() {
 		try {
