@@ -229,7 +229,7 @@ public class Engine extends PApplet {
 		private PFont font;
 		private String text = "《触摸星空》说明：点触油画上的星星与之交互，多次点击同一颗星星会有更多效果";
 		
-		private static final int WAIT_FOR_GUIDE_SHOW = 15 * 1000; // 30s
+		private static final int WAIT_FOR_GUIDE_SHOW = 10 * 1000; // 10s
 		
 		public static Guide start(Engine e) {
 			Guide guide = new Guide(e);

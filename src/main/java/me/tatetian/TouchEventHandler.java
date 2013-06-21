@@ -50,7 +50,7 @@ public class TouchEventHandler implements Runnable{
 			char key = 0;
 			int i = 0, b = 0;
 			serial.write(255);
-			if(serial.available() == 4) { 
+			//if(serial.available() == 4) { 
 				serial.readBytes(touchInfo);
 				
 				for(; i < 4; i++) {
@@ -65,7 +65,7 @@ public class TouchEventHandler implements Runnable{
 					}
 					if(key > 0) break;
 				}
-			}
+			//}
 			if(key > 0 && key != lastKey) {
 				System.out.println((seq++) + ": key = " + key + ", pos = " + (i+1) + "-" + (b + 1));
 				E.queueKeyEvent(key);
