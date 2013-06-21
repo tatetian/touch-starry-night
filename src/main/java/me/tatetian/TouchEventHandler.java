@@ -30,9 +30,9 @@ public class TouchEventHandler implements Runnable{
 	
 	private static char[][] KEYS = {
 		//   		 1   	2    3    4    5    6    7    8 
-		/*1*/	{ '3', 'm',  0,  'm', 'm', 'm',  0,   0  },
-		/*2*/	{ 'b', 'a', '9', '8', '2', '4', '1',  0/*'7' da5*/  },
-		/*3*/	{  0,   0,   0,  'm', 'm', 'm',  0,   0  },
+		/*1*/	{ '3', 'm',  0,  'm', 0, 0,  0,   0  },
+		/*2*/	{ 'b', 'a', '9', '8', '2', '4', '1', '7' },
+		/*3*/	{  0,   0,   0,  'm', 0, 'm',  0,   0  },
 		/*4*/	{ '1', '1', 'c', '6', '0',  0,   0,   0  }
 	};
 	
@@ -53,7 +53,7 @@ public class TouchEventHandler implements Runnable{
 			int i = 0, b = 0;
 			for(; i < 4; i++) {
 				int bits = touchInfo[i];
-				for(b = 0; b < 7; b++) {
+				for(b = 0; b < 8; b++) {
 					int bit = (bits >> b) & 1;
 					if(bit == 0) continue;
 					

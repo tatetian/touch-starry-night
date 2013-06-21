@@ -230,11 +230,10 @@ public class NebulaScene extends Scene {
 		if(fromScene != null) return;
 		
 		// if press 'm', then go back to main scene
-		if(key == 'm')
-			E.switchScene(E.getMainScene());
-		else if(key == sceneKey) {
+		if(key == sceneKey) 
 			click(0, 0);
-		}
+		else //if(key == 'm')
+			E.switchScene(E.getMainScene());
 	}
 	
 	@Override

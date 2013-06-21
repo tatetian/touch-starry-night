@@ -10,7 +10,7 @@ public abstract class Scene extends DrawableObject {
 		// note CHE3 should be same as CHE2
 		MOON, M51, CHE2, VENUS, HIP_13454, 
 		CHE3, LOU1, DA5, CHUAN3, TIAN1, HIP_10064,
-		HIP_10670, LOU3 
+		HIP_10670, LOU3 	
 	}
 	
 	protected Name name;

@@ -55,9 +55,10 @@ public class MainScene extends Scene {
 	public void hide() {
 		// save animations for next time when this scene is shown
 		animMemory.clear();
+		E.saveNewAnimations();
 		animMemory.addAll(E.getAnimations());
 		for(Animation a : animMemory)
-			a.pause();
+			a.pause(); 
 	}
 	
 	@Override
@@ -265,6 +266,9 @@ public class MainScene extends Scene {
 				// stop fadeout and do fadein
 				fadeAnim.stop();
 				fadeIn();
+				NebulaScene scene = NebulaScene.get(star.name);
+				if(scene != null)
+					E.switchScene(scene);
 			}
 		}
 		

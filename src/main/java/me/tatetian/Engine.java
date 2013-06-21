@@ -37,12 +37,12 @@ public class Engine extends PApplet {
 	private char pressKey = 0;
 	
 	public static void main(String[] args) {
-    PApplet.main("me.tatetian.Engine",
+		PApplet.main("me.tatetian.Engine",
     		// the following parameters are not working. But why?
     		new String[] { "--full-screen", "--hide-stop", 
     									 "--bgcolor=#000000", "--display=1", 
     									 "--location=0,0" } );
-  }
+	}
 	
 	// force the window to be full screen
 	@Override
@@ -87,10 +87,10 @@ public class Engine extends PApplet {
 		TouchEventHandler.start(this);
 		
 		// play background music
-//		Minim minim = new Minim(this);
-//		AudioPlayer player = minim.loadFile(BASE_PATH + "sound/background.mp3");
-//	  player.play();
-//	  player.loop();
+		Minim minim = new Minim(this);
+		AudioPlayer player = minim.loadFile(BASE_PATH + "sound/background.mp3");
+		player.play();
+		player.loop();
 	}
 	
 	@Override
@@ -152,7 +152,7 @@ public class Engine extends PApplet {
 		a.start();
 	}
 	
-	private void saveNewAnimations() {
+	public void saveNewAnimations() {
 		if(!newlyAdded.isEmpty()) {
 			animations.addAll(newlyAdded);
 			newlyAdded.clear();
