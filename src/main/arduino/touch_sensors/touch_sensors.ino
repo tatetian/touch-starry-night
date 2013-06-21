@@ -1,27 +1,16 @@
-//**************************************************************//
-//  Name    : shiftIn Example 2.1                               //
-//  Author  : Carlyn Maw                                        //
-//  Date    : 25 Jan, 2007                                      //
-//  Version : 1.0                                               //
-//  Notes   : Code for using a CD4021B Shift Register    	//
-//          :                                                   //
-//****************************************************************
+// Code for using a CD4021B Shift Register
 
-//define where your pins are
+// define where your pins are
 int latchPin = 9;
 int dataPin = 6;
 int clockPin = 7;
 
-//Define variables to hold the data 
-//for each shift register.
-//starting with non-zero numbers can help
-//troubleshoot
-byte switchVar1 = 0;  //01001000
-byte switchVar2 = 0; //10011111
-byte switchVar3 = 0; //10011111
-byte switchVar4 = 0; //10011111
+byte switchVar1 = 0;
+byte switchVar2 = 0;
+byte switchVar3 = 0;
+byte switchVar4 = 0;
 
-int headerByte = 0;
+byte header = 0;
 
 void setup() {
   //start serial
@@ -34,9 +23,8 @@ void setup() {
 }
 
 void loop() {
-  // magic header: 255
   if (Serial.available()  > 0) {
-     headerByte = Serial.read();
+     header = Serial.read();
   }
   
   //Pulse the latch pin:
@@ -47,36 +35,17 @@ void loop() {
   //set it to 0 to transmit data serially  
   digitalWrite(latchPin,0);
 
-  //while the shift register is in serial mode
-  //collect each shift register into a byte
-  //the register attached to the chip comes in first 
+  // read sensor states
   switchVar1 = shiftIn(dataPin, clockPin);
   switchVar2 = shiftIn(dataPin, clockPin);
   switchVar3 = shiftIn(dataPin, clockPin);
   switchVar4 = shiftIn(dataPin, clockPin);
 
-  //Print out the results.
-  //leading 0's at the top of the byte 
-  //(7, 6, 5, etc) will be dropped before 
-  //the first pin that has a high input
-  //reading  
-//  Serial.println(switchVar1, BIN);
-//  Serial.println(switchVar2, BIN);
-//  Serial.println(switchVar3, BIN);
-//  Serial.println(switchVar4, BIN);
   // send sensor data
   Serial.write(switchVar1);
   Serial.write(switchVar2);
   Serial.write(switchVar3);
   Serial.write(switchVar4);
-  // send again to confirm
-  Serial.write(switchVar1);
-  Serial.write(switchVar2);
-  Serial.write(switchVar3);
-  Serial.write(switchVar4);
-  //white space
-  //delay so all these print satements can keep up. 
- // delay(1000);
 }
 
 //------------------------------------------------end main loop
