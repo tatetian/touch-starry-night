@@ -238,7 +238,7 @@ public class NebulaScene extends Scene {
 	
 	@Override
 	public void click(int clientX, int clientY) {
-		if(E.millis() - lastClickTime > 3000) {
+		if(E.millis() - lastClickTime > 2000) {
 			lastClickTime = E.millis();
 			if(!textShown) {
 				if(nebulaAnim != null) nebulaAnim.pause();

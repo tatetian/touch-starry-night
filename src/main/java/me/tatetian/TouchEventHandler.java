@@ -30,7 +30,7 @@ public class TouchEventHandler implements Runnable{
 	
 	private static char[][] KEYS = {
 		//   		 1   	2    3    4    5    6    7    8 
-		/*1*/	{ '3', 'm',  0,  'm', 0, 0,  0,   0  },
+		/*1*/	{ '3', 'm',  0,  'm', 0,   0,  0,   0  },
 		/*2*/	{ 'b', 'a', '9', '8', '2', '4', '1', '7' },
 		/*3*/	{  0,   0,   0,  'm', 0, 'm',  0,   0  },
 		/*4*/	{ '1', '1', 'c', '6', '0',  0,   0,   0  }
@@ -47,21 +47,24 @@ public class TouchEventHandler implements Runnable{
 	public void run() {		
 		byte[] touchInfo = new byte[4];
 		while(true) {
-			serial.write(128);
-			serial.readBytes(touchInfo);
 			char key = 0;
 			int i = 0, b = 0;
-			for(; i < 4; i++) {
-				int bits = touchInfo[i];
-				for(b = 0; b < 8; b++) {
-					int bit = (bits >> b) & 1;
-					if(bit == 0) continue;
-					
-					key = KEYS[i][b];
+			serial.write(255);
+			if(serial.available() == 4) { 
+				serial.readBytes(touchInfo);
+				
+				for(; i < 4; i++) {
+					int bits = touchInfo[i];
+					for(b = 0; b < 8; b++) {
+						int bit = (bits >> b) & 1;
+						if(bit == 0) continue;
+						
+						key = KEYS[i][b];
+						if(key > 0) break;
+						//System.out.println((seq++) + ": key = " + key + ", pos = " + (i+1) + "-" + (b + 1));
+					}
 					if(key > 0) break;
-					//System.out.println((seq++) + ": key = " + key + ", pos = " + (i+1) + "-" + (b + 1));
 				}
-				if(key > 0) break;
 			}
 			if(key > 0 && key != lastKey) {
 				System.out.println((seq++) + ": key = " + key + ", pos = " + (i+1) + "-" + (b + 1));
