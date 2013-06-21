@@ -348,7 +348,7 @@ public class MainScene extends Scene {
 		private static final float GRASS_SCALE_SPEED 		= 1;
 		
 		
-		private static final int 	 TIME_PERIOD = 30 ; // 30s
+		private static final int 	 TIME_PERIOD = 20 ; // 30s
 		private static final float MAX_SCALE 	= 0.2f;
 		private static final int 	 MAX_STEPS  = TIME_PERIOD * E.FRAME_RATE;		
 		private static final float BASE_SPEED = MAX_SCALE / MAX_STEPS; 

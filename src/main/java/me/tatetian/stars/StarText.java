@@ -26,7 +26,6 @@ public class StarText extends DrawableObject implements Showable, Transparentibl
 		super(G, E.WIN_W / 2, E.WIN_H / 2, z, 0, 255);
 		MAX_ALPHA = 255;
 		// prepare to process text
-	  RG.init(E);	  
 	  RFont font =new RFont(Engine.BASE_PATH + "new_spirit.ttf");
 	  font.setAlign(RFont.CENTER);
 	  font.setSize(textSize);	  
